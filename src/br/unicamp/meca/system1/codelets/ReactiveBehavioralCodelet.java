@@ -38,7 +38,7 @@ public abstract class ReactiveBehavioralCodelet extends Codelet {
 
 	protected String motorCodeletId;
 
-	protected String soarCodeletId;
+	protected String plannerCodeletId;
 
 	/**
 	 * Creates a MECA Reactive Behavioral Codelet.
@@ -52,39 +52,39 @@ public abstract class ReactiveBehavioralCodelet extends Codelet {
 	 * @param motorCodeletId
 	 *            the id of the Motor Codelet which will read the outputs of
 	 *            this Reactive Behavioral Codelet.
-	 * @param soarCodeletId
-	 *            the id of the Soar Codelet whose outputs will be read by this
+	 * @param plannerCodeletId
+	 *            the id of the Planner Codelet whose outputs will be read by this
 	 *            Reactive Behavioral Codelet.
 	 */
 	public ReactiveBehavioralCodelet(String id, ArrayList<String> perceptualCodeletsIds, String motorCodeletId,
-			String soarCodeletId) {
+			String plannerCodeletId) {
 		super();
 		setName(id);
 		this.id = id;
 		this.motorCodeletId = motorCodeletId;
 		this.perceptualCodeletsIds = perceptualCodeletsIds;
-		this.soarCodeletId = soarCodeletId;
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**
-	 * Returns the id of the Soar Codelet whose outputs will be read by this
+	 * Returns the id of the Planner Codelet whose outputs will be read by this
 	 * Reactive Behavioral Codelet.
 	 * 
-	 * @return the soarCodeletId
+	 * @return the plannerCodeletId
 	 */
-	public String getSoarCodeletId() {
-		return soarCodeletId;
+	public String getPlannerCodeletId() {
+		return plannerCodeletId;
 	}
 
 	/**
-	 * Sets the id of the Soar Codelet whose outputs will be read by this
+	 * Sets the id of the Planner Codelet whose outputs will be read by this
 	 * Reactive Behavioral Codelet.
 	 * 
-	 * @param soarCodeletId
-	 *            the soarCodeletId to set
+	 * @param plannerCodeletId
+	 *            the plannerCodeletId to set
 	 */
-	public void setSoarCodeletId(String soarCodeletId) {
-		this.soarCodeletId = soarCodeletId;
+	public void setPlannerCodeletId(String plannerCodeletId) {
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**

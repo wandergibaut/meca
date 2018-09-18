@@ -39,7 +39,7 @@ public abstract class MotivationalBehavioralCodelet extends Codelet {
 
 	protected ArrayList<String> motivationalCodeletsIds;
 
-	protected String soarCodeletId;
+	protected String plannerCodeletId;
 
 	/**
 	 * Creates a MECA Motivational Behavioral Codelet.
@@ -53,39 +53,39 @@ public abstract class MotivationalBehavioralCodelet extends Codelet {
 	 * @param motivationalCodeletsIds
 	 *            the list of ids of the Motivational Codelets whose outputs
 	 *            will be read by this Motivational Behavioral Codelet.
-	 * @param soarCodeletId
-	 *            the id of the Soar Codelet whose outputs will be read by this
+	 * @param plannerCodeletId
+	 *            the id of the Planner Codelet whose outputs will be read by this
 	 *            Motivational Behavioral Codelet.
 	 */
 	public MotivationalBehavioralCodelet(String id, String motorCodeletId, ArrayList<String> motivationalCodeletsIds,
-			String soarCodeletId) {
+			String plannerCodeletId) {
 		super();
 		setName(id);
 		this.id = id;
 		this.motorCodeletId = motorCodeletId;
 		this.motivationalCodeletsIds = motivationalCodeletsIds;
-		this.soarCodeletId = soarCodeletId;
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**
-	 * Returns the id of the Soar Codelet whose outputs will be read by this
+	 * Returns the id of the Planner Codelet whose outputs will be read by this
 	 * Motivational Behavioral Codelet.
 	 * 
-	 * @return the soarCodeletId
+	 * @return the plannerCodeletId
 	 */
-	public String getSoarCodeletId() {
-		return soarCodeletId;
+	public String getPlannerCodeletId() {
+		return plannerCodeletId;
 	}
 
 	/**
-	 * Sets the id of the Soar Codelet whose outputs will be read by this
+	 * Sets the id of the Planner Codelet whose outputs will be read by this
 	 * Motivational Behavioral Codelet.
 	 * 
-	 * @param soarCodeletId
-	 *            the soarCodeletId to set
+	 * @param plannerCodeletId
+	 *            the plannerCodeletId to set
 	 */
-	public void setSoarCodeletId(String soarCodeletId) {
-		this.soarCodeletId = soarCodeletId;
+	public void setPlannerCodeletId(String plannerCodeletId) {
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**

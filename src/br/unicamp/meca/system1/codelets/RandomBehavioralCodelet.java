@@ -34,7 +34,7 @@ public abstract class RandomBehavioralCodelet extends Codelet {
 
 	protected String motorCodeletId;
 
-	protected String soarCodeletId;
+	protected String plannerCodeletId;
 
 	/**
 	 * Creates a MECA Random Behavioral Codelet.
@@ -46,35 +46,35 @@ public abstract class RandomBehavioralCodelet extends Codelet {
 	 *            the id of the Motor Codelet which will be affected by the
 	 *            Memory Container which will receive this Random Behavioral
 	 *            Codelet's output
-	 * @param soarCodeletId
-	 *            the id of the Soar Codelet whose outputs will be read by this
+	 * @param plannerCodeletId
+	 *            the id of the Planner Codelet whose outputs will be read by this
 	 *            Random Behavioral Codelet
 	 */
-	public RandomBehavioralCodelet(String id, String motorCodeletId, String soarCodeletId) {
+	public RandomBehavioralCodelet(String id, String motorCodeletId, String plannerCodeletId) {
 		super();
 		setName(id);
 		this.id = id;
 		this.motorCodeletId = motorCodeletId;
-		this.soarCodeletId = soarCodeletId;
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**
-	 * Returns the id of the attached Soar Codelet.
+	 * Returns the id of the attached Planner Codelet.
 	 * 
 	 * @return the soarCodeletId
 	 */
-	public String getSoarCodeletId() {
-		return soarCodeletId;
+	public String getPlannerCodeletId() {
+		return plannerCodeletId;
 	}
 
 	/**
-	 * Sets the id of the attached Soar Codelet
+	 * Sets the id of the attached Planner Codelet
 	 * 
-	 * @param soarCodeletId
-	 *            the soarCodeletId to set
+	 * @param plannerCodeletId
+	 *            the plannerCodeletId to set
 	 */
-	public void setSoarCodeletId(String soarCodeletId) {
-		this.soarCodeletId = soarCodeletId;
+	public void setPlannerCodeletId(String plannerCodeletId) {
+		this.plannerCodeletId = plannerCodeletId;
 	}
 
 	/**

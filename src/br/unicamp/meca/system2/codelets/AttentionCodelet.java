@@ -33,5 +33,15 @@ import br.unicamp.cst.core.entities.Codelet;
  *
  */
 public abstract class AttentionCodelet extends Codelet {
-
+    
+    protected String id;
+    
+    public void setId(String id){
+        this.id = id;
+    }
+    
+    public String getId(){
+        return this.id;
+    }
+    
 }

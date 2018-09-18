@@ -109,7 +109,7 @@ public class WorkingMemory {
 
 	private String id;
 	private Memory cueMemory;
-	private Memory plansMemory;
+	private MemoryContainer plansMemory;
 	private Memory episodicRecallMemory;
 	private Memory globalWorkspaceMemory;
 	private Memory executivePlanMemory;
@@ -186,7 +186,7 @@ public class WorkingMemory {
 	 * 
 	 * @return the Plans Memory.
 	 */
-	public Memory getPlansMemory() {
+	public MemoryContainer getPlansMemory() {
 		return plansMemory;
 	}
 
@@ -196,7 +196,7 @@ public class WorkingMemory {
 	 * @param plansMemory
 	 *            the plans Memory to set.
 	 */
-	public void setPlansMemory(Memory plansMemory) {
+	public void setPlansMemory(MemoryContainer plansMemory) {
 		this.plansMemory = plansMemory;
 	}
 
