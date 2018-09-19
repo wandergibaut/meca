@@ -17,15 +17,15 @@ import java.util.List;
  * @author wander
  */
 public abstract class PlannerCodelet extends Codelet{
-        private String id;
+        protected String id;
 
-	private WorkingMemory workingMemory;
+	protected WorkingMemory workingMemory;
 
 	//private List<Object> rawPlan = null;
 
-	private Memory workingMemoryOutputMO;
+	protected Memory workingMemoryOutputMO;
 
-	private Memory workingMemoryInputMO;
+	protected Memory workingMemoryInputMO;
 
     
     public PlannerCodelet(String id) {

@@ -358,7 +358,7 @@ public class MecaMind extends Mind {
 			for (ReactiveBehavioralCodelet reactiveBehavioralCodelet : getReactiveBehavioralCodelets()) {
 				if (reactiveBehavioralCodelet != null && reactiveBehavioralCodelet.getId() != null
 						&& reactiveBehavioralCodelet.getPerceptualCodeletsIds() != null
-						&& reactiveBehavioralCodelet.getMotorCodeletId() != null
+						&& reactiveBehavioralCodelet.getMotorCodeletIds() != null
 						&& reactiveBehavioralCodelet.getPlannerCodeletId() != null) {
 
 					insertCodelet(reactiveBehavioralCodelet);
@@ -368,10 +368,12 @@ public class MecaMind extends Mind {
 					if (motorCodelets != null) {
 						for (MotorCodelet motorCodelet : motorCodelets) {
 							if (motorCodelet != null && motorCodelet.getId() != null) {
-								if (motorCodelet.getId()
-										.equalsIgnoreCase(reactiveBehavioralCodelet.getMotorCodeletId())) {
+                                                            for(int i=0; i < reactiveBehavioralCodelet.getMotorCodeletIds().size(); i++){
+                                                                if (motorCodelet.getId()
+										.equalsIgnoreCase(reactiveBehavioralCodelet.getMotorCodeletIds().get(i))) {
 									reactiveBehavioralCodelet.addOutputs(motorCodelet.getInputs());
 								}
+                                                        }
 							}
 						}
 					}
@@ -520,6 +522,7 @@ public class MecaMind extends Mind {
                 if(expectationCodelet != null){
                         expectationCodelet.addInput(getWorkingMemory().getCurrentPerceptionMemory());
                         expectationCodelet.addInputs(learningCodelet.getOutputs());
+                        expectationCodelet.addInputs(episodicRetrievalCodelet.getOutputs());
                         expectationCodelet.addOutput(createMemoryObject(selectionCodelet.getId()));
                         expectationCodelet.addOutput(createMemoryObject(learningCodelet.getId()));
                         insertCodelet(expectationCodelet);

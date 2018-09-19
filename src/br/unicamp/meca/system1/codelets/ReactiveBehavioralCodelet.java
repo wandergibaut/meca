@@ -36,7 +36,7 @@ public abstract class ReactiveBehavioralCodelet extends Codelet {
 
 	protected ArrayList<String> perceptualCodeletsIds;
 
-	protected String motorCodeletId;
+	protected ArrayList<String> motorCodeletIds;
 
 	protected String plannerCodeletId;
 
@@ -49,19 +49,19 @@ public abstract class ReactiveBehavioralCodelet extends Codelet {
 	 * @param perceptualCodeletsIds
 	 *            the list of ids of the Perceptual Codelets whose outputs will
 	 *            be read by this Reactive Behavioral Codelet.
-	 * @param motorCodeletId
+	 * @param motorCodeletIds
 	 *            the id of the Motor Codelet which will read the outputs of
 	 *            this Reactive Behavioral Codelet.
 	 * @param plannerCodeletId
 	 *            the id of the Planner Codelet whose outputs will be read by this
 	 *            Reactive Behavioral Codelet.
 	 */
-	public ReactiveBehavioralCodelet(String id, ArrayList<String> perceptualCodeletsIds, String motorCodeletId,
+	public ReactiveBehavioralCodelet(String id, ArrayList<String> perceptualCodeletsIds, ArrayList<String> motorCodeletIds,
 			String plannerCodeletId) {
 		super();
 		setName(id);
 		this.id = id;
-		this.motorCodeletId = motorCodeletId;
+		this.motorCodeletIds = motorCodeletIds;
 		this.perceptualCodeletsIds = perceptualCodeletsIds;
 		this.plannerCodeletId = plannerCodeletId;
 	}
@@ -131,21 +131,21 @@ public abstract class ReactiveBehavioralCodelet extends Codelet {
 	 * Returns the id of the Motor Codelet which will read the outputs of this
 	 * Reactive Behavioral Codelet.
 	 * 
-	 * @return the motorCodeletId
+	 * @return the motorCodeletIds
 	 */
-	public String getMotorCodeletId() {
-		return motorCodeletId;
+	public ArrayList<String> getMotorCodeletIds() {
+		return motorCodeletIds;
 	}
 
 	/**
 	 * Sets the id of the Motor Codelet which will read the outputs of this
 	 * Reactive Behavioral Codelet.
 	 * 
-	 * @param motorCodeletId
+	 * @param motorCodeletIds
 	 *            the motorCodeletId to set
 	 */
-	public void setMotorCodeletId(String motorCodeletId) {
-		this.motorCodeletId = motorCodeletId;
+	public void setMotorCodeletId(ArrayList<String> motorCodeletIds) {
+		this.motorCodeletIds = motorCodeletIds;
 	}
 
 }
