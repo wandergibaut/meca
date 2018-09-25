@@ -478,16 +478,19 @@ public class MecaMind extends Mind {
 		}
                 if(!attentionCodeletsSystem2.isEmpty()){
                     for(AttentionCodelet attention : attentionCodeletsSystem2){
-                        String[] className = attention.getClass().getName().split(".");
+                        //String[] className = attention.getClass().getName().split("\\.");
                         
-                        if(className[5].equals("PerceptualBufferAttentionCodelet")){
+                        if(attention instanceof  PerceptualBufferAttentionCodelet){
+                        //if(className[4].equals("PerceptualBufferAttentionCodelet")){
                             attention.addOutput(createMemoryObject(attention.getId())); //cria um output com o nome do perceptual
-                            attention.addInput(getWorkingMemory().getCurrentPerceptionMemory()); 
+                            attention.addInput(getWorkingMemory().getCurrentPerceptionMemory());
+                            setPerceptualBufferAttentionCodelet((PerceptualBufferAttentionCodelet)attention);
                             insertCodelet(attention);
                         }
-                        else if (className[5].equals("EpisodicAttentionCodelet")){
+                        else if (attention instanceof EpisodicAttentionCodelet){
                             attention.addOutput(createMemoryObject(attention.getId())); //cria um output com o nome do perceptual
-                            attention.addInputs(getPerceptualBufferAttentionCodelet().getOutputs()); 
+                            attention.addInputs(getPerceptualBufferAttentionCodelet().getOutputs());
+                            setEpisodicAttentionCodelet((EpisodicAttentionCodelet)attention);
                             insertCodelet(attention);
                         }
                     }
@@ -963,5 +966,17 @@ public class MecaMind extends Mind {
         
         public PerceptualBufferAttentionCodelet getPerceptualBufferAttentionCodelet(){
             return perceptualBufferAttentionCodelet;
+        }
+        
+        public void setPerceptualBufferAttentionCodelet(PerceptualBufferAttentionCodelet perceptualBufferAttentionCodelet){
+            this.perceptualBufferAttentionCodelet = perceptualBufferAttentionCodelet;
+        }
+        
+        public EpisodicAttentionCodelet getEpisodicAttentionCodelet(){
+            return this.episodicAttentionCodelet;
+        }
+        
+        public void setEpisodicAttentionCodelet(EpisodicAttentionCodelet attention){
+            this.episodicAttentionCodelet = attention;
         }
 }
