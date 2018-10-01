@@ -25,9 +25,9 @@ public abstract class EpisodicRetrievalCodelet extends Codelet{
     protected String episodicLearningCodeletId;
     protected String s1To2AttentionCodeletId;
     
-    private Memory cueMemoryMO;
-    private Memory episodicMemory; 
-    private Memory episodicRecallMemory;
+    protected Memory cueMemoryMO;
+    protected Memory episodicMemory; 
+    protected Memory episodicRecallMemory;
     
     
     private List<Memory> episodicMemoryMOs; 

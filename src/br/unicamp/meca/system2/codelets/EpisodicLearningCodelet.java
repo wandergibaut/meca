@@ -26,8 +26,8 @@ public abstract class EpisodicLearningCodelet extends Codelet{
     protected String episodicAttentionCodeletId;
     protected String episodicRetrievalCodeletId;
     
-    private Memory episodicMemory;
-    private Memory episodicBufferMemory;
+    protected Memory episodicMemory;
+    protected Memory episodicBufferMemory;
     
     private List<Memory> episodicMemoryMOList;
     private List<AbstractObjectPair> episodicBufferList;
@@ -50,8 +50,8 @@ public abstract class EpisodicLearningCodelet extends Codelet{
         if(episodicBufferMemory==null && episodicAttentionCodeletId!=null)
 			this.episodicBufferMemory = this.getInput(episodicAttentionCodeletId);
                 
-                if(episodicMemory==null && episodicRetrievalCodeletId!=null)
-			this.episodicMemory = this.getOutput(episodicRetrievalCodeletId);
+                if(episodicMemory==null)
+			this.episodicMemory = this.getOutput(this.id);
 
     }
 

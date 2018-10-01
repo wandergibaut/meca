@@ -71,7 +71,7 @@ public abstract class S1To2AttentionCodelet extends Codelet {
 	@Override
 	public void accessMemoryObjects() {
 
-		if (getInputPerceptsMO() == null) {
+		if (getInputPercepts() == null || getInputPercepts().isEmpty()) {
 			for (Memory perceptualMO : this.getInputs()) {
 				getInputPercepts().add((AbstractObject) perceptualMO.getI());
 			}

@@ -17,21 +17,21 @@ import java.util.List;
  */
 public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     
-    protected String id;
+    //protected String id;
     
     protected String perceptualBufferCodeletId;
     
     protected String episodicLearningCodeletId;
     
-    private Memory perceptualBufferMemory;
-    private Memory episodicBufferMemory;
+    protected Memory perceptualBufferMemory;
+    protected Memory episodicBufferMemory;
     
     private List<AbstractObject> perceptionBufferList;
     private List<AbstractObjectPair> episodicBufferList;
     private final int maxSize;
 
     public EpisodicAttentionCodelet(String id, String perceptualBufferCodeletId, String episodicLearningCodeletId, int maxSize){
-        this.id = id;
+        this.setId(id);
         this.perceptualBufferCodeletId = perceptualBufferCodeletId;
         this.episodicLearningCodeletId = episodicLearningCodeletId;
         this.maxSize = maxSize;
@@ -44,8 +44,9 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     
     @Override
     public void accessMemoryObjects() {
-		if(episodicBufferMemory==null && episodicLearningCodeletId!=null)
-			episodicBufferMemory = this.getOutput(episodicLearningCodeletId);
+        //erro aqui. Definir padrão pra esses ids
+		if(episodicBufferMemory==null)
+			episodicBufferMemory = this.getOutput(this.id);
                 
                 if(perceptualBufferMemory==null && perceptualBufferCodeletId!=null)
 			perceptualBufferMemory = this.getInput(perceptualBufferCodeletId);
@@ -82,6 +83,22 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
                         episodicBufferList.remove(0);
                     }
                 }
+    }
+    
+    public void setPerceptualBufferMemory(Memory perceptualBufferMemory){
+        this.perceptualBufferMemory = perceptualBufferMemory;
+    }
+    
+    public Memory getPerceptualBufferMemory(){
+        return this.perceptualBufferMemory;
+    }
+    
+    public void setEpisodicBufferMemory(Memory episodicBufferMemory){
+        this.episodicBufferMemory = episodicBufferMemory;
+    }
+    
+    public Memory getEpisodicBufferMemory(){
+        return this.episodicBufferMemory;
     }
         
 }

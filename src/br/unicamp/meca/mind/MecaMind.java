@@ -116,7 +116,7 @@ public class MecaMind extends Mind {
 	 */
 	public MecaMind() {
 		setId(UUID.randomUUID().toString());
-		setWorkingMemory(new WorkingMemory(getId()));
+		setWorkingMemory(new WorkingMemory(getId()/*, attentionCodeletSystem1.getId(), episodicRetrievalCodelet.getId()*/));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class MecaMind extends Mind {
 	 */
 	public MecaMind(String id) {
 		setId(id);
-		setWorkingMemory(new WorkingMemory(getId()));
+		setWorkingMemory(new WorkingMemory(getId()/*, attentionCodeletSystem1.getId(), episodicRetrievalCodelet.getId()*/));
 	}
 
 	/**
@@ -480,10 +480,11 @@ public class MecaMind extends Mind {
                     for(AttentionCodelet attention : attentionCodeletsSystem2){
                         //String[] className = attention.getClass().getName().split("\\.");
                         
+                        //olhar isso aqui
                         if(attention instanceof  PerceptualBufferAttentionCodelet){
                         //if(className[4].equals("PerceptualBufferAttentionCodelet")){
                             attention.addOutput(createMemoryObject(attention.getId())); //cria um output com o nome do perceptual
-                            attention.addInput(getWorkingMemory().getCurrentPerceptionMemory());
+                            attention.addInput(attentionCodeletSystem1.getOutputFilteredPerceptsMO());
                             setPerceptualBufferAttentionCodelet((PerceptualBufferAttentionCodelet)attention);
                             insertCodelet(attention);
                         }
@@ -527,7 +528,7 @@ public class MecaMind extends Mind {
                         expectationCodelet.addInputs(learningCodelet.getOutputs());
                         expectationCodelet.addInputs(episodicRetrievalCodelet.getOutputs());
                         expectationCodelet.addOutput(createMemoryObject(selectionCodelet.getId()));
-                        expectationCodelet.addOutput(createMemoryObject(learningCodelet.getId()));
+                        expectationCodelet.addOutput(createMemoryObject(expectationCodelet.getId()));
                         insertCodelet(expectationCodelet);
                 }
         }
@@ -546,8 +547,8 @@ public class MecaMind extends Mind {
                 if(learningCodelet != null){
                     //weights output
                         learningCodelet.addInput(getWorkingMemory().getCurrentPerceptionMemory());
-                        learningCodelet.addInput(expectationCodelet.getOutput(learningCodelet.getId()));
-                        learningCodelet.addOutput(createMemoryObject(expectationCodelet.getId()));
+                        learningCodelet.addInput(createMemoryObject(expectationCodelet.getId()));
+                        learningCodelet.addOutput(createMemoryObject(learningCodelet.getId()));
                         insertCodelet(learningCodelet);
                 }
         }
@@ -558,7 +559,11 @@ public class MecaMind extends Mind {
 
 			if (attentionCodeletSystem1 != null) {
 				getWorkingMemory().setCurrentPerceptionMemory(attentionCodeletSystem1.getOutputFilteredPerceptsMO());
+                                getWorkingMemory().getCueMemory().setType(attentionCodeletSystem1.getId());
 			}
+                        if(episodicRetrievalCodelet != null){
+                                getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
+                        }
 
 		}
 	}
