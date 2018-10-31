@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2018  DCA-FEEC-UNICAMP                  *
+ * All rights reserved. This program and the accompanying materials            *
+ * are made available under the terms of the GNU Lesser Public License v3      *
+ * which accompanies this distribution, and is available at                    *
+ * http://www.gnu.org/licenses/lgpl.html                                       *
+ *                                                                             *
+ * Contributors:                                                               *
+ *     W. Gibaut and R. R. Gudwin                                              * 
+ *                                                                             *
+ *                                                                             *
+ ******************************************************************************/
 package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Memory;
@@ -13,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * @author wander
+ * @author W. Gibaut
  */
 public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     
@@ -26,8 +33,8 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     protected Memory perceptualBufferMemory;
     protected Memory episodicBufferMemory;
     
-    private List<AbstractObject> perceptionBufferList;
-    private List<AbstractObjectPair> episodicBufferList;
+    protected List<AbstractObject> perceptionBufferList = new ArrayList<>();
+    protected List<AbstractObjectPair> episodicBufferList = new ArrayList<>();
     private final int maxSize;
 
     public EpisodicAttentionCodelet(String id, String perceptualBufferCodeletId, String episodicLearningCodeletId, int maxSize){
@@ -55,12 +62,12 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
 
     @Override
     public void proc() {
-        perceptionBufferList = (List<AbstractObject>) episodicBufferMemory.getI();
-        //pega as listas
-        perceptionBundleMethod();
-        
-        //da set nas memories
-        
+        if(episodicBufferMemory != null){
+            perceptionBufferList = (List<AbstractObject>) episodicBufferMemory.getI();
+            //pega as listas
+            perceptionBundleMethod();
+                    //da set nas memories
+        }
     }
     
     public abstract void perceptionBundleMethod();

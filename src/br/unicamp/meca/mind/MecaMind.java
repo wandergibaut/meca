@@ -23,8 +23,6 @@ import br.unicamp.cst.core.entities.MemoryObject;
 import br.unicamp.cst.core.entities.Mind;
 import br.unicamp.meca.memory.WorkingMemory;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
-import br.unicamp.meca.system1.codelets.EmotionalCodelet;
-import br.unicamp.meca.system1.codelets.MoodCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalBehavioralCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalCodelet;
 import br.unicamp.meca.system1.codelets.MotorCodelet;
@@ -52,6 +50,11 @@ import br.unicamp.meca.system2.codelets.SelectionCodelet;
  * @author A. L. O. Paraense
  * @author E. Froes
  * @see Mind
+ * 
+ * Author of the new fields, methods and modifications of this version:
+ * 
+ * @author W. Gibaut
+ * 
  */
 public class MecaMind extends Mind {
 
@@ -63,13 +66,9 @@ public class MecaMind extends Mind {
 
 	private List<PerceptualCodelet> perceptualCodelets;
 
-	private List<MoodCodelet> moodCodelets;
-
 	private List<MotivationalCodelet> motivationalCodelets;
 
 	private S1To2AttentionCodelet attentionCodeletSystem1;
-
-	private List<EmotionalCodelet> emotionalCodelets;
 
 	private List<RandomBehavioralCodelet> randomBehavioralCodelets;
 
@@ -162,13 +161,13 @@ public class MecaMind extends Mind {
 
 		mountMotivationalBehavioralCodelets();
 
+                mountEpisodicCodelets();
+                
 		mountExpectationCodelet();
                 
                 mountSelectionCodelet();
                 
                 mountLearningCodelet();
-                
-                mountEpisodicCodelets();
                 
                 mountModules();
                 
@@ -507,8 +506,9 @@ public class MecaMind extends Mind {
             
             if(episodicRetrievalCodelet != null){
                 episodicRetrievalCodelet.addInputs(episodicLearningCodelet.getOutputs());
-                episodicRetrievalCodelet.addInput(getWorkingMemory().getCueMemory());
-                episodicRetrievalCodelet.addOutput(getWorkingMemory().getEpisodicRecallMemory());
+                //episodicRetrievalCodelet.addInput(getWorkingMemory().getCueMemory());
+                episodicRetrievalCodelet.addInputs(attentionCodeletSystem1.getOutputs());
+                episodicRetrievalCodelet.addOutput(createMemoryObject(episodicRetrievalCodelet.getId()));
                 insertCodelet(episodicRetrievalCodelet);
             }
         }
@@ -525,7 +525,7 @@ public class MecaMind extends Mind {
         private void mountExpectationCodelet(){
                 if(expectationCodelet != null){
                         expectationCodelet.addInput(getWorkingMemory().getCurrentPerceptionMemory());
-                        expectationCodelet.addInputs(learningCodelet.getOutputs());
+                        expectationCodelet.addInput(createMemoryObject(learningCodelet.getId()));
                         expectationCodelet.addInputs(episodicRetrievalCodelet.getOutputs());
                         expectationCodelet.addOutput(createMemoryObject(selectionCodelet.getId()));
                         expectationCodelet.addOutput(createMemoryObject(expectationCodelet.getId()));
@@ -589,16 +589,6 @@ public class MecaMind extends Mind {
 	}
 
 	/**
-	 * Sets the Mood Codelets.
-	 * 
-	 * @param moodCodelets
-	 *            the moodCodelets to set
-	 */
-	public void setMoodCodelets(List<MoodCodelet> moodCodelets) {
-		this.moodCodelets = moodCodelets;
-	}
-
-	/**
 	 * Sets the Motivational Codelets.
 	 * 
 	 * @param motivationalCodelets
@@ -616,16 +606,6 @@ public class MecaMind extends Mind {
 	 */
 	public void setAttentionCodeletSystem1(S1To2AttentionCodelet attentionCodeletSystem1) {
 		this.attentionCodeletSystem1 = attentionCodeletSystem1;
-	}
-
-	/**
-	 * Sets the Emotional Codelets.
-	 * 
-	 * @param emotionalCodelets
-	 *            the emotionalCodelets to set
-	 */
-	public void setEmotionalCodelets(List<EmotionalCodelet> emotionalCodelets) {
-		this.emotionalCodelets = emotionalCodelets;
 	}
 
 	/**
@@ -789,30 +769,12 @@ public class MecaMind extends Mind {
 	}
 
 	/**
-	 * Gets the Mood Codelets.
-	 * 
-	 * @return the mood codelets.
-	 */
-	public List<MoodCodelet> getMoodCodelets() {
-		return moodCodelets;
-	}
-
-	/**
 	 * Gets the Motivational Codelets.
 	 * 
 	 * @return the Motivational Codelets.
 	 */
 	public List<MotivationalCodelet> getMotivationalCodelets() {
 		return motivationalCodelets;
-	}
-
-	/**
-	 * Gets the Emotional Codelets.
-	 * 
-	 * @return the Emotional Codelets.
-	 */
-	public List<EmotionalCodelet> getEmotionalCodelets() {
-		return emotionalCodelets;
 	}
 
 	/**

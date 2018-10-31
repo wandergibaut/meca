@@ -126,12 +126,8 @@ public class WorkingMemory {
 	 * 
 	 * @param id
 	 *            the Working Memory Id. Should be unique per Working Memory.
-         * @param S1to2AttentionCodeletId
-	 *            the Working Memory Id. Should be unique per Working Memory.
-         * @param episodicRetrievalCodeletId
-	 *            the Working Memory Id. Should be unique per Working Memory.
 	 */
-	public WorkingMemory(String id/*, String S1to2AttentionCodeletId, String episodicRetrievalCodeletId*/) {
+	public WorkingMemory(String id) {
 		setId(id);
 
 		setPlansMemory(new MemoryContainer());

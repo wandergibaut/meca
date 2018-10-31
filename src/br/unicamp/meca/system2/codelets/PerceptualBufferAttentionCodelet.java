@@ -1,8 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2018  DCA-FEEC-UNICAMP                                        *
+ * All rights reserved. This program and the accompanying materials            *
+ * are made available under the terms of the GNU Lesser Public License v3      *
+ * which accompanies this distribution, and is available at                    *
+ * http://www.gnu.org/licenses/lgpl.html                                       *
+ *                                                                             *
+ * Contributors:                                                               *
+ *     W. Gibaut, and R. R. Gudwin                                             * 
+ *                                                                             *
+ ******************************************************************************/
 package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Memory;
@@ -12,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author wander
+ * @author W. Gibaut
  */
 public abstract class PerceptualBufferAttentionCodelet extends AttentionCodelet{    
     
@@ -28,7 +34,7 @@ public abstract class PerceptualBufferAttentionCodelet extends AttentionCodelet{
 	protected String s1to2AttentionCodeletId;
     
     //private MemoryObject perceptualBufferMO;
-    private List<AbstractObject> bufferList;
+    protected List<AbstractObject> bufferList;
     private AbstractObject currentPerception;
     private final int maxSize;
     private AbstractObject oldPerception;
