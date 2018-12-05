@@ -22,6 +22,7 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.MemoryObject;
 import br.unicamp.cst.core.entities.Mind;
 import br.unicamp.meca.memory.WorkingMemory;
+import br.unicamp.meca.system1.codelets.AdaptationCodelet;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalBehavioralCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalCodelet;
@@ -77,6 +78,8 @@ public class MecaMind extends Mind {
 	private List<MotivationalBehavioralCodelet> motivationalBehavioralCodelets;
 
 	private List<MotorCodelet> motorCodelets;
+        
+        private AdaptationCodelet adaptationCodelet;
 
 	/*
 	 * System 2
@@ -171,6 +174,7 @@ public class MecaMind extends Mind {
                 
                 mountModules();
                 
+                mountAdaptationCodelet();
 	}
 
 	private void mountModules() {
@@ -475,7 +479,7 @@ public class MecaMind extends Mind {
 			attentionCodeletSystem1.setOutputFilteredPerceptsMO(attentionMemoryOutput);
 			insertCodelet(attentionCodeletSystem1);
 		}
-                if(!attentionCodeletsSystem2.isEmpty()){
+                if(attentionCodeletsSystem2 != null){
                     for(AttentionCodelet attention : attentionCodeletsSystem2){
                         //String[] className = attention.getClass().getName().split("\\.");
                         
@@ -567,6 +571,52 @@ public class MecaMind extends Mind {
 
 		}
 	}
+        
+        private void mountAdaptationCodelet(){
+            if(adaptationCodelet != null && adaptationCodelet.getPerceptualCodeletsIds() != null
+					&& adaptationCodelet.getMotorCodeletIds() != null){
+                
+                if (motorCodelets != null) {
+						for (MotorCodelet motorCodelet : motorCodelets) {
+							if (motorCodelet != null && motorCodelet.getId() != null) {
+                                                            for(int i=0; i < adaptationCodelet.getMotorCodeletIds().size(); i++){
+                                                                if (motorCodelet.getId()
+										.equalsIgnoreCase(adaptationCodelet.getMotorCodeletIds().get(i))) {
+									adaptationCodelet.addOutputs(motorCodelet.getInputs());
+								}
+                                                        }
+							}
+						}
+					}
+					/*
+					 * Inputs
+					 */
+					if (perceptualCodelets != null) {
+						for (PerceptualCodelet perceptualCodelet : perceptualCodelets) {
+							if (perceptualCodelet != null && perceptualCodelet.getId() != null) {
+								ArrayList<String> perceptualCodeletsIds = adaptationCodelet
+										.getPerceptualCodeletsIds();
+								if (perceptualCodeletsIds != null) {
+									for (String perceptualCodeletId : perceptualCodeletsIds) {
+										if (perceptualCodeletId != null
+												&& perceptualCodelet.getId().equalsIgnoreCase(perceptualCodeletId)) {
+											adaptationCodelet.addInputs(perceptualCodelet.getOutputs());
+										}
+									}
+								}
+							}
+						}
+					}
+
+					if (plannerCodelet != null && plannerCodelet.getId() != null) {
+						if (plannerCodelet.getId().equalsIgnoreCase(adaptationCodelet.getPlannerCodeletId())) {
+							adaptationCodelet.addBroadcasts(plannerCodelet.getOutputs());
+						}
+
+					}
+                insertCodelet(adaptationCodelet);
+            }
+        }
 
 	/**
 	 * Sets the Sensory Codelets.
@@ -945,5 +995,14 @@ public class MecaMind extends Mind {
         
         public void setEpisodicAttentionCodelet(EpisodicAttentionCodelet attention){
             this.episodicAttentionCodelet = attention;
+        }
+        
+        
+        public AdaptationCodelet getAdaptationCodelet(){
+            return this.adaptationCodelet;
+        }
+        
+        public void setAdaptationCodelet(AdaptationCodelet adaptation){
+            this.adaptationCodelet = adaptation;
         }
 }
