@@ -12,6 +12,7 @@
  ******************************************************************************/
 package br.unicamp.meca.mind;
 
+import br.unicamp.cst.core.entities.Codelet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1004,5 +1005,9 @@ public class MecaMind extends Mind {
         
         public void setAdaptationCodelet(AdaptationCodelet adaptation){
             this.adaptationCodelet = adaptation;
+        }
+        
+        public void removeCodelet(Codelet codelet){
+            this.codeRack.destroyCodelet(codelet);
         }
 }
