@@ -13,8 +13,11 @@
 package br.unicamp.meca.system1.codelets;
 
 import br.unicamp.cst.core.entities.Codelet;
-import br.unicamp.cst.core.entities.Memory;
+import br.unicamp.meca.mind.MecaMind;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.openhft.compiler.CompilerUtils;
 
 /**
  *
@@ -28,13 +31,16 @@ public abstract class AdaptationCodelet extends Codelet{
     protected ArrayList<String> perceptualCodeletsIds; 
     protected ArrayList<String> motorCodeletsIds;
     protected String plannerCodeletId;
+    protected MecaMind mind;
     
     
-    public AdaptationCodelet(String id, ArrayList<String> perceptualCodeletsIds, ArrayList<String> motorCodeletsIds, String plannerCodeletId){
+    
+    public AdaptationCodelet(String id, ArrayList<String> perceptualCodeletsIds, ArrayList<String> motorCodeletsIds, String plannerCodeletId, MecaMind mind){
         this.id = id;
         this.perceptualCodeletsIds = perceptualCodeletsIds;
         this.motorCodeletsIds = motorCodeletsIds;
         this.plannerCodeletId = plannerCodeletId;
+        this.mind = mind;
     }
     
     
@@ -54,7 +60,47 @@ public abstract class AdaptationCodelet extends Codelet{
     }
     
     
-    public abstract void insertAndLink(ReactiveBehavioralCodelet bCodelet);
+    //public abstract void insertAndLink(ReactiveBehavioralCodelet bCodelet);
+    public void insertAndLink(ReactiveBehavioralCodelet bCodelet){
+        bCodelet.addInputs(mind.getReactiveBehavioralCodelets().get(0).getInputs());
+        bCodelet.addOutputs(mind.getReactiveBehavioralCodelets().get(0).getOutputs());
+        
+        mind.insertCodelet(bCodelet);
+        mind.getReactiveBehavioralCodelets().add(bCodelet);
+        mind.start();
+    }
+    
+    public void killCodelet(ReactiveBehavioralCodelet behavior){
+        mind.removeBehavioralCodelet(behavior);
+        mind.start();  
+    }
+    
+    public ReactiveBehavioralCodelet compileCodelet(String compiledBehaviorClassName, String compiledBehaviorCode){
+        return (ReactiveBehavioralCodelet)generateNewInstance(compile(compiledBehaviorClassName, compiledBehaviorCode));
+    }
+    
+    public Class compile(String className, String code) {
+        try {
+            Class aClass = CompilerUtils.CACHED_COMPILER.loadFromJava(className, code);
+            return aClass;
+        } catch (Exception e) {}
+
+        return null;
+    }
+
+    public Object generateNewInstance(Class aClass){
+        Object object = null;
+
+        try {
+            object = aClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(AdaptationCodelet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return object;
+    }
+    
+    //abstract void defineBehaviorConstructor(Object... param);
     
     /**
 	 * Returns the id of the Planner Codelet whose outputs will be read by this

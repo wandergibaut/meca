@@ -1010,4 +1010,14 @@ public class MecaMind extends Mind {
         public void removeCodelet(Codelet codelet){
             this.codeRack.destroyCodelet(codelet);
         }
+        
+        public void removeBehavioralCodelet(ReactiveBehavioralCodelet codelet){
+            //for(ReactiveBehavioralCodelet bCodelet : this.reactiveBehavioralCodelets){
+                //if(codelet.getId().equals(bCodelet.getId())){
+                    //reactiveBehavioralCodelets.remove(0);
+                //}
+            //}
+            this.reactiveBehavioralCodelets.remove(codelet);
+            this.codeRack.destroyCodelet(codelet);
+        }
 }
