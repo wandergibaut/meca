@@ -19,7 +19,7 @@ import br.unicamp.cst.core.entities.Memory;
 //import br.unicamp.cst.representation.owrl.Property;
 //import java.util.HashMap;
 //import java.util.List;
-//import util.AbstractObjectPair;
+//import util.Episode;
 
 /**
  *

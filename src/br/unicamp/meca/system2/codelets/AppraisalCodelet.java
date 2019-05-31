@@ -19,7 +19,9 @@ import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
-import br.unicamp.meca.util.AbstractObjectPair;
+import br.unicamp.meca.util.Episode;
+import org.nd4j.linalg.api.ndarray.INDArray;
+
 import java.util.List;
 
 
@@ -33,10 +35,10 @@ public class AppraisalCodelet extends Codelet{
     private Memory currentPerceptionMemory;
     private Appraisal appraisal;
     
-    private AbstractObject predicted;
-    private AbstractObject lastActual;
-    private AbstractObject actual;
-    private AbstractObjectPair evaluation;
+    private INDArray predicted;
+    private INDArray lastActual;
+    private INDArray actual;
+    private Episode evaluation;
     private S1To2AttentionCodelet attention;
     
     private String Id;
@@ -56,22 +58,22 @@ public class AppraisalCodelet extends Codelet{
     
     @Override
     public void proc() {
-        predicted = (AbstractObject)predictedSituationMO.getI();
-        actual = (AbstractObject)currentPerceptionMemory.getI();
+        predicted = (INDArray)predictedSituationMO.getI();
+        actual = (INDArray)currentPerceptionMemory.getI();
         
-        if((double)getPropertyStruct(getAbstractObjectStruct(actual,"self"),"TotalTime").getQualityDimensions().get(0).getValue() > (double)getPropertyStruct(getAbstractObjectStruct(lastActual,"self"),"TotalTime").getQualityDimensions().get(0).getValue()){
+        //if((double)getPropertyStruct(getAbstractObjectStruct(actual,"self"),"TotalTime").getQualityDimensions().get(0).getValue() > (double)getPropertyStruct(getAbstractObjectStruct(lastActual,"self"),"TotalTime").getQualityDimensions().get(0).getValue()){
             appraisal = appraisalGeneration(predicted, actual);
-            evaluation.setBefore(predicted);
-            evaluation.setAfter(actual);
+            evaluation.setInitialState(predicted);
+            evaluation.setTerminalState(actual);
             evaluation.setAppraisal(appraisal);
-        }
+        //}
         
         lastActual = actual;
         
         outputAppraisalMemory.setI(evaluation);
     }
     
-    public Appraisal appraisalGeneration(AbstractObject predicted, AbstractObject actual){
+    public Appraisal appraisalGeneration(INDArray predicted, INDArray actual){
         
         if(equals(actual,predicted)){
             Appraisal app = new Appraisal("similarity","high",80);
@@ -117,8 +119,16 @@ public class AppraisalCodelet extends Codelet{
     public void setInputAbstractObjectMO(Memory inputAbstractObjectMO) {
         this.inputAbstractObjectMO = inputAbstractObjectMO;
     }*/
-    
-    public boolean equals(AbstractObject currentPerception, AbstractObject predictedSituation){
+
+
+    //TODO: hamming distance
+    public boolean equals(INDArray currentPerception, INDArray predictedSituation){
+
+        return false;
+    }
+
+
+    public boolean equalsOWRL(AbstractObject currentPerception, AbstractObject predictedSituation){
         boolean isSimilar = false; //resposta final
         boolean thereIsParts = false;
         
@@ -139,7 +149,7 @@ public class AppraisalCodelet extends Codelet{
             int partCount = 0;
             for(AbstractObject part : predictedSituation.getCompositeParts()){
             //primeiro loop tera 3 partes
-                partSimilar[partCount] = equals(getAbstractObjectStruct(currentPerception,part.getName()),part);
+                partSimilar[partCount] = equalsOWRL(getAbstractObjectStruct(currentPerception,part.getName()),part);
                 partCount++;
             }
         }

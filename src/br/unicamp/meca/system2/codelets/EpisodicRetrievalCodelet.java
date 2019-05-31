@@ -17,7 +17,8 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
-import br.unicamp.meca.util.AbstractObjectPair;
+import br.unicamp.meca.util.Episode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public abstract class EpisodicRetrievalCodelet extends Codelet{
 
     @Override
     public void proc() {
-        List<AbstractObjectPair> recallEpisodes = new ArrayList<>();
+        List<Episode> recallEpisodes = new ArrayList<>();
         //episodicMemory.
         episodicMemoryMOs = (List<Memory>)episodicMemory.getI();
         
@@ -79,7 +80,7 @@ public abstract class EpisodicRetrievalCodelet extends Codelet{
                 
                 for(int i=0; i<episodicMemoryMOs.size(); i++){
                     Memory epMem = episodicMemoryMOs.get(i);
-                    AbstractObjectPair episode = (AbstractObjectPair)epMem.getI();
+                    Episode episode = (Episode)epMem.getI();
                     if(equals(currentPerceptionToSearch, episode)){
                     //if(equals(currentPerceptionToSearch, episode.getBefore())){
                         recallEpisodes.add(episode);
@@ -91,7 +92,7 @@ public abstract class EpisodicRetrievalCodelet extends Codelet{
     
     }
     
-    public abstract boolean equals(AbstractObject currentPerceptionToSearch, AbstractObjectPair episode);
+    public abstract boolean equals(AbstractObject currentPerceptionToSearch, Episode episode);
     
     public abstract boolean equals(AbstractObject cueMemoryConf, AbstractObject epMemBefore);
     

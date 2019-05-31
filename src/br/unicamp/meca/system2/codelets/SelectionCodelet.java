@@ -15,7 +15,9 @@ package br.unicamp.meca.system2.codelets;
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.representation.owrl.AbstractObject;
-import br.unicamp.meca.util.AbstractObjectPair;
+import br.unicamp.meca.util.Episode;
+import org.nd4j.linalg.api.ndarray.INDArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,7 @@ public abstract class SelectionCodelet extends Codelet{
     protected Memory predictedSituationMemory;
     protected Memory nextActionMemory;
     
-    protected AbstractObject predictedSituation;
+    protected INDArray predictedSituation;
     protected String nextAction;
     
     /** We need a reference to the SelectionCodelet which will read the outputs of this ExpectationCodelet*/
@@ -44,7 +46,7 @@ public abstract class SelectionCodelet extends Codelet{
     /** We need a reference to the SelectionCodelet which will read the outputs of this ExpectationCodelet*/
 	protected String nextActionMemoryId;
 
-    //private Map<String, AbstractObjectPair> predictedActionEffect = new HashMap<>();
+    //private Map<String, Episode> predictedActionEffect = new HashMap<>();
     //private Map<String, double[]> encodedPredictedActionEffect = new HashMap<>();
     
 
@@ -59,7 +61,7 @@ public abstract class SelectionCodelet extends Codelet{
 
     @Override
     public void proc() {
-        HashMap<String, AbstractObject> selection = policy();
+        HashMap<String, INDArray> selection = policy();
         
         nextAction = selection.keySet().iterator().next();
         
@@ -75,13 +77,13 @@ public abstract class SelectionCodelet extends Codelet{
     }
     
     
-    public abstract HashMap<String, AbstractObject> policy();
+    public abstract HashMap<String, INDArray> policy();
     
-    public String getHighestAppraisalAction(Map<String, AbstractObjectPair> list){
-        AbstractObjectPair better = new AbstractObjectPair();
+    public String getHighestAppraisalAction(Map<String, Episode> list){
+        Episode better = new Episode();
         List<String> actions = new ArrayList<>();
         String action = "";
-        for(AbstractObjectPair pair : list.values()){
+        for(Episode pair : list.values()){
             if(better.getAppraisal() == null){
                 better = pair;
                 for(String key : list.keySet()){
@@ -121,10 +123,10 @@ public abstract class SelectionCodelet extends Codelet{
         //return action;
     }
     
-    public AbstractObject getHighestAppraisalConfiguration(Map<String, AbstractObjectPair> list, String choosen){
-        AbstractObjectPair better = new AbstractObjectPair();
+    public INDArray getHighestAppraisalConfiguration(Map<String, Episode> list, String choosen){
+        Episode better = new Episode();
         better = list.get(choosen);
-        /*for(AbstractObjectPair pair : list.values()){
+        /*for(Episode pair : list.values()){
             if(better.getAppraisal() == null){
                 better = pair;
             }
@@ -134,14 +136,14 @@ public abstract class SelectionCodelet extends Codelet{
             }
         }*/
         
-        return better.getAfter();
+        return better.getTerminalState();
         //return action;
     }
     
-    public void getRandomAction(Map<String, AbstractObjectPair> list, Random rand){ 
+    public void getRandomAction(Map<String, Episode> list, Random rand){
         nextAction = (String)list.keySet().toArray()[rand.nextInt(list.keySet().size())];
-        AbstractObjectPair temp = (AbstractObjectPair)list.values().toArray()[rand.nextInt(list.values().size())]; 
-        predictedSituation = temp.getAfter();
+        Episode temp = (Episode)list.values().toArray()[rand.nextInt(list.values().size())];
+        predictedSituation = temp.getTerminalState();
     }
     
     public String getId() {

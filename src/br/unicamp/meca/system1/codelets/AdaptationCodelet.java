@@ -61,22 +61,22 @@ public abstract class AdaptationCodelet extends Codelet{
     
     
     //public abstract void insertAndLink(ReactiveBehavioralCodelet bCodelet);
-    public void insertAndLink(ReactiveBehavioralCodelet bCodelet){
-        bCodelet.addInputs(mind.getReactiveBehavioralCodelets().get(0).getInputs());
-        bCodelet.addOutputs(mind.getReactiveBehavioralCodelets().get(0).getOutputs());
+    public void insertAndLink(BehaviorCodelet bCodelet){
+        bCodelet.addInputs(mind.getBehaviorCodelets().get(0).getInputs());
+        bCodelet.addOutputs(mind.getBehaviorCodelets().get(0).getOutputs());
         
         mind.insertCodelet(bCodelet);
-        mind.getReactiveBehavioralCodelets().add(bCodelet);
+        mind.getBehaviorCodelets().add(bCodelet);
         mind.start();
     }
     
-    public void killCodelet(ReactiveBehavioralCodelet behavior){
+    public void killCodelet(BehaviorCodelet behavior){
         mind.removeBehavioralCodelet(behavior);
         mind.start();  
     }
     
-    public ReactiveBehavioralCodelet compileCodelet(String compiledBehaviorClassName, String compiledBehaviorCode){
-        return (ReactiveBehavioralCodelet)generateNewInstance(compile(compiledBehaviorClassName, compiledBehaviorCode));
+    public BehaviorCodelet compileCodelet(String compiledBehaviorClassName, String compiledBehaviorCode){
+        return (BehaviorCodelet)generateNewInstance(compile(compiledBehaviorClassName, compiledBehaviorCode));
     }
     
     public Class compile(String className, String code) {

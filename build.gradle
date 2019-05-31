@@ -1,0 +1,58 @@
+plugins {
+	id 'java-library-distribution'
+  	id 'jacoco'
+  	id 'maven'
+}
+
+group = 'com.github.CST-Group'
+
+sourceSets {
+   main {
+      java {
+         srcDir 'src'
+      }
+   }
+	
+   test {
+      java {
+         srcDir 'test'
+      }
+   }
+}
+
+description = "The Multipurpose Enhanced Cognitive Architecture (MECA)"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '0.1.1'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile group: 'org.nd4j', name: 'nd4j-native-platform', version: '1.0.0-beta4'
+    compile group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '1.0.0-beta4'
+   api 'com.github.CST-Group:cst:0.2.4'
+   testImplementation group: 'junit', name: 'junit', version: '4.9'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+artifacts
+{
+    archives javadocJar, sourcesJar
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}

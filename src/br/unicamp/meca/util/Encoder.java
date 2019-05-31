@@ -6,6 +6,7 @@
 package br.unicamp.meca.util;
 
 import br.unicamp.cst.representation.owrl.AbstractObject;
+import org.nd4j.linalg.api.ndarray.INDArray;
 
 /**
  *
@@ -14,9 +15,9 @@ import br.unicamp.cst.representation.owrl.AbstractObject;
 public abstract class Encoder {
     
     
-    public abstract float[] encodeConfiguration(AbstractObject conf);
+    public abstract INDArray encodeConfiguration(AbstractObject conf);
     
-    public abstract double[] encodeConfigurationDouble(AbstractObject conf);
+    public abstract double[][] encodeConfigurationDouble(AbstractObject conf);
     
     public abstract double[] encodeActionDouble(String action);
     

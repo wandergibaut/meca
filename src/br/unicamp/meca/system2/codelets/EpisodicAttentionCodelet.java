@@ -14,7 +14,9 @@ package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.representation.owrl.AbstractObject;
-import br.unicamp.meca.util.AbstractObjectPair;
+import br.unicamp.meca.util.Episode;
+import org.nd4j.linalg.api.ndarray.INDArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,8 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     protected Memory perceptualBufferMemory;
     protected Memory episodicBufferMemory;
     
-    protected List<AbstractObject> perceptionBufferList = new ArrayList<>();
-    protected List<AbstractObjectPair> episodicBufferList = new ArrayList<>();
+    protected List<INDArray> perceptionBufferList = new ArrayList<>();
+    protected List<Episode> episodicBufferList = new ArrayList<>();
     private final int maxSize;
 
     public EpisodicAttentionCodelet(String id, String perceptualBufferCodeletId, String episodicLearningCodeletId, int maxSize){
@@ -63,7 +65,7 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     @Override
     public void proc() {
         if(episodicBufferMemory != null){
-            perceptionBufferList = (List<AbstractObject>) episodicBufferMemory.getI();
+            perceptionBufferList = (List<INDArray>) episodicBufferMemory.getI();
             //pega as listas
             perceptionBundleMethod();
                     //da set nas memories
@@ -80,7 +82,7 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
                 //for(int i=incrementalSize-1; i>1;i--){
                 //cria pares de configurações (ou seja, uma ação) pro EpBuffer
                 if(perceptionBufferList.size() >1){
-                    episodicBufferList.add(new AbstractObjectPair(perceptionBufferList.get(perceptionBufferList.size()-2),perceptionBufferList.get(perceptionBufferList.size()-1)));
+                    episodicBufferList.add(new Episode(perceptionBufferList.get(perceptionBufferList.size()-2),perceptionBufferList.get(perceptionBufferList.size()-1)));
                 }
                     
                 //}

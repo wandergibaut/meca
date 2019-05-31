@@ -17,7 +17,8 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
-import br.unicamp.meca.util.AbstractObjectPair;
+import br.unicamp.meca.util.Episode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public abstract class EpisodicLearningCodelet extends Codelet{
     protected Memory episodicBufferMemory;
     
     private List<Memory> episodicMemoryMOList;
-    private List<AbstractObjectPair> episodicBufferList;
+    private List<Episode> episodicBufferList;
     //private Memory syncWait;
 
 
@@ -73,10 +74,11 @@ public abstract class EpisodicLearningCodelet extends Codelet{
     public abstract void addEncondingEp();
 
 
-    public boolean equals (AbstractObjectPair first, AbstractObjectPair second){
+    public boolean equals (Episode first, Episode second){
         boolean result = false;
         
-        if(first.getAfter().equals(second.getAfter()) || first.getBefore().equals(second.getBefore())){
+        if(first.getTerminalState().equals(second.getTerminalState()) ||
+                first.getInitialState().equals(second.getInitialState())){
             result = true;
         }
         
