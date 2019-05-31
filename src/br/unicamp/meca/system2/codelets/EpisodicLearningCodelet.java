@@ -17,7 +17,7 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
-import br.unicamp.meca.util.Episode;
+import br.unicamp.meca.models.Episode;
 
 import java.util.ArrayList;
 import java.util.List;

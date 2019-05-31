@@ -14,8 +14,7 @@ package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
-import br.unicamp.cst.representation.owrl.AbstractObject;
-import br.unicamp.meca.util.Episode;
+import br.unicamp.meca.models.Episode;
 import org.nd4j.linalg.api.ndarray.INDArray;
 
 import java.util.ArrayList;

@@ -19,7 +19,7 @@ import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
-import br.unicamp.meca.util.Episode;
+import br.unicamp.meca.models.Episode;
 import org.nd4j.linalg.api.ndarray.INDArray;
 
 import java.util.List;

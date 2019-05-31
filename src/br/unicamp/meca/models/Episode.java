@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.unicamp.meca.util;
+package br.unicamp.meca.models;
 
 import br.unicamp.cst.motivational.Appraisal;
 import br.unicamp.cst.representation.owrl.AbstractObject;
+import br.unicamp.meca.util.Encoder;
 import org.nd4j.linalg.api.ndarray.INDArray;
 
 import java.util.ArrayList;
