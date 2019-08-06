@@ -18,13 +18,9 @@ repositories {
 }
 
 dependencies {
-<<<<<<< HEAD
     compile group: 'org.nd4j', name: 'nd4j-native-platform', version: '1.0.0-beta4'
     compile group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '1.0.0-beta4'
-   api 'com.github.CST-Group:cst:0.2.4'
-=======
    api 'com.github.CST-Group:cst:0.2.6'
->>>>>>> 1027f1b8e37a9c35f44733685a0b8d464317e01e
    testImplementation group: 'junit', name: 'junit', version: '4.9'
 }
 
