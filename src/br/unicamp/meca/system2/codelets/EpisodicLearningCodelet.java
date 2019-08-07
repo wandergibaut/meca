@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2018  DCA-FEEC-UNICAMP                  *
+ * All rights reserved. This program and the accompanying materials            *
+ * are made available under the terms of the GNU Lesser Public License v3      *
+ * which accompanies this distribution, and is available at                    *
+ * http://www.gnu.org/licenses/lgpl.html                                       *
+ *                                                                             *
+ * Contributors:                                                               *
+ *     W. Gibaut and R. R. Gudwin                                              * 
+ *                                                                             *
+ *                                                                             *
+ ******************************************************************************/
 package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Codelet;
@@ -17,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author wander
+ * @author W. Gibaut
  */
 public abstract class EpisodicLearningCodelet extends Codelet{
     
@@ -26,8 +33,8 @@ public abstract class EpisodicLearningCodelet extends Codelet{
     protected String episodicAttentionCodeletId;
     protected String episodicRetrievalCodeletId;
     
-    private Memory episodicMemory;
-    private Memory episodicBufferMemory;
+    protected Memory episodicMemory;
+    protected Memory episodicBufferMemory;
     
     private List<Memory> episodicMemoryMOList;
     private List<AbstractObjectPair> episodicBufferList;
@@ -50,8 +57,8 @@ public abstract class EpisodicLearningCodelet extends Codelet{
         if(episodicBufferMemory==null && episodicAttentionCodeletId!=null)
 			this.episodicBufferMemory = this.getInput(episodicAttentionCodeletId);
                 
-                if(episodicMemory==null && episodicRetrievalCodeletId!=null)
-			this.episodicMemory = this.getOutput(episodicRetrievalCodeletId);
+                if(episodicMemory==null)
+			this.episodicMemory = this.getOutput(this.id);
 
     }
 

@@ -108,9 +108,9 @@ public class WorkingMemory {
 	public static final String WORKING_MEMORY_INPUT = "WORKING_MEMORY_INPUT";
 
 	private String id;
-	private Memory cueMemory;
+	private MemoryObject cueMemory;
 	private MemoryContainer plansMemory;
-	private Memory episodicRecallMemory;
+	private MemoryObject episodicRecallMemory;
 	private Memory globalWorkspaceMemory;
 	private Memory executivePlanMemory;
 
@@ -131,7 +131,7 @@ public class WorkingMemory {
 		setId(id);
 
 		setPlansMemory(new MemoryContainer());
-		setEpisodicRecallMemory(new MemoryContainer());
+		setEpisodicRecallMemory(new MemoryObject());
 		setGlobalWorkspaceMemory(new MemoryContainer());
 		setImaginationsMemory(new MemoryContainer());
 		setGoalsMemory(new MemoryContainer());
@@ -141,6 +141,9 @@ public class WorkingMemory {
 		setExecutivePlanMemory(new MemoryObject());
 		setCurrentPerceptionMemory(new MemoryObject());
 		setPredictedSituationMemory(new MemoryObject());
+                
+                //cueMemory.setType(S1to2AttentionCodeletId);
+                //episodicRecallMemory.setType(episodicRetrievalCodeletId);
 	}
 
 	/**
@@ -167,7 +170,7 @@ public class WorkingMemory {
 	 * 
 	 * @return the Cue Memory.
 	 */
-	public Memory getCueMemory() {
+	public MemoryObject getCueMemory() {
 		return cueMemory;
 	}
 
@@ -178,7 +181,7 @@ public class WorkingMemory {
 	 *            the Cue memory to set.
 	 */
 	public void setCueMemory(Memory cueMemory) {
-		this.cueMemory = cueMemory;
+		this.cueMemory = (MemoryObject)cueMemory;
 	}
 
 	/**
@@ -205,7 +208,7 @@ public class WorkingMemory {
 	 * 
 	 * @return the Episodic Recall Memory.
 	 */
-	public Memory getEpisodicRecallMemory() {
+	public MemoryObject getEpisodicRecallMemory() {
 		return episodicRecallMemory;
 	}
 
@@ -216,7 +219,7 @@ public class WorkingMemory {
 	 *            the Episodic Recall Memory to set.
 	 */
 	public void setEpisodicRecallMemory(Memory episodicRecallMemory) {
-		this.episodicRecallMemory = episodicRecallMemory;
+		this.episodicRecallMemory = (MemoryObject)episodicRecallMemory;
 	}
 
 	/**

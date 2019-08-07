@@ -35,10 +35,12 @@ import br.unicamp.cst.representation.owrl.QualityDimension;
  * for System 2 subsystems in a representation suitable to be processed within
  * System 2.
  * 
- * 
- * @author WAAAAAANNDERRRRR
  * @author A. L. O. Paraense
  * @see Codelet
+ * 
+ * Author of the new fields, methods and modifications of this version:
+ * 
+ * @author W. Gibaut
  *
  */
 public abstract class S1To2AttentionCodelet extends Codelet {
@@ -71,7 +73,7 @@ public abstract class S1To2AttentionCodelet extends Codelet {
 	@Override
 	public void accessMemoryObjects() {
 
-		if (getInputPerceptsMO() == null) {
+		if (getInputPercepts() == null || getInputPercepts().isEmpty()) {
 			for (Memory perceptualMO : this.getInputs()) {
 				getInputPercepts().add((AbstractObject) perceptualMO.getI());
 			}

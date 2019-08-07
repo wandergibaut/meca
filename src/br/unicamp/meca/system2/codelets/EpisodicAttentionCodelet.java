@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2018  DCA-FEEC-UNICAMP                  *
+ * All rights reserved. This program and the accompanying materials            *
+ * are made available under the terms of the GNU Lesser Public License v3      *
+ * which accompanies this distribution, and is available at                    *
+ * http://www.gnu.org/licenses/lgpl.html                                       *
+ *                                                                             *
+ * Contributors:                                                               *
+ *     W. Gibaut and R. R. Gudwin                                              * 
+ *                                                                             *
+ *                                                                             *
+ ******************************************************************************/
 package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Memory;
@@ -13,25 +20,25 @@ import java.util.List;
 
 /**
  *
- * @author wander
+ * @author W. Gibaut
  */
 public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     
-    protected String id;
+    //protected String id;
     
     protected String perceptualBufferCodeletId;
     
     protected String episodicLearningCodeletId;
     
-    private Memory perceptualBufferMemory;
-    private Memory episodicBufferMemory;
+    protected Memory perceptualBufferMemory;
+    protected Memory episodicBufferMemory;
     
-    private List<AbstractObject> perceptionBufferList;
-    private List<AbstractObjectPair> episodicBufferList;
+    protected List<AbstractObject> perceptionBufferList = new ArrayList<>();
+    protected List<AbstractObjectPair> episodicBufferList = new ArrayList<>();
     private final int maxSize;
 
     public EpisodicAttentionCodelet(String id, String perceptualBufferCodeletId, String episodicLearningCodeletId, int maxSize){
-        this.id = id;
+        this.setId(id);
         this.perceptualBufferCodeletId = perceptualBufferCodeletId;
         this.episodicLearningCodeletId = episodicLearningCodeletId;
         this.maxSize = maxSize;
@@ -44,8 +51,9 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     
     @Override
     public void accessMemoryObjects() {
-		if(episodicBufferMemory==null && episodicLearningCodeletId!=null)
-			episodicBufferMemory = this.getOutput(episodicLearningCodeletId);
+        //erro aqui. Definir padrão pra esses ids
+		if(episodicBufferMemory==null)
+			episodicBufferMemory = this.getOutput(this.id);
                 
                 if(perceptualBufferMemory==null && perceptualBufferCodeletId!=null)
 			perceptualBufferMemory = this.getInput(perceptualBufferCodeletId);
@@ -54,12 +62,12 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
 
     @Override
     public void proc() {
-        perceptionBufferList = (List<AbstractObject>) episodicBufferMemory.getI();
-        //pega as listas
-        perceptionBundleMethod();
-        
-        //da set nas memories
-        
+        if(episodicBufferMemory != null){
+            perceptionBufferList = (List<AbstractObject>) episodicBufferMemory.getI();
+            //pega as listas
+            perceptionBundleMethod();
+                    //da set nas memories
+        }
     }
     
     public abstract void perceptionBundleMethod();
@@ -82,6 +90,22 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
                         episodicBufferList.remove(0);
                     }
                 }
+    }
+    
+    public void setPerceptualBufferMemory(Memory perceptualBufferMemory){
+        this.perceptualBufferMemory = perceptualBufferMemory;
+    }
+    
+    public Memory getPerceptualBufferMemory(){
+        return this.perceptualBufferMemory;
+    }
+    
+    public void setEpisodicBufferMemory(Memory episodicBufferMemory){
+        this.episodicBufferMemory = episodicBufferMemory;
+    }
+    
+    public Memory getEpisodicBufferMemory(){
+        return this.episodicBufferMemory;
     }
         
 }

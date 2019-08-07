@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author wander
+ * @author W. Gibaut
  */
 public class EpisodicMemory {
     

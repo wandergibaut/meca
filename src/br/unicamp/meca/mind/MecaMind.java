@@ -12,6 +12,7 @@
  ******************************************************************************/
 package br.unicamp.meca.mind;
 
+import br.unicamp.cst.core.entities.Codelet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +23,8 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.MemoryObject;
 import br.unicamp.cst.core.entities.Mind;
 import br.unicamp.meca.memory.WorkingMemory;
+import br.unicamp.meca.system1.codelets.AdaptationCodelet;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
-import br.unicamp.meca.system1.codelets.EmotionalCodelet;
-import br.unicamp.meca.system1.codelets.MoodCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalBehavioralCodelet;
 import br.unicamp.meca.system1.codelets.MotivationalCodelet;
 import br.unicamp.meca.system1.codelets.MotorCodelet;
@@ -52,6 +52,11 @@ import br.unicamp.meca.system2.codelets.SelectionCodelet;
  * @author A. L. O. Paraense
  * @author E. Froes
  * @see Mind
+ * 
+ * Author of the new fields, methods and modifications of this version:
+ * 
+ * @author W. Gibaut
+ * 
  */
 public class MecaMind extends Mind {
 
@@ -63,13 +68,9 @@ public class MecaMind extends Mind {
 
 	private List<PerceptualCodelet> perceptualCodelets;
 
-	private List<MoodCodelet> moodCodelets;
-
 	private List<MotivationalCodelet> motivationalCodelets;
 
 	private S1To2AttentionCodelet attentionCodeletSystem1;
-
-	private List<EmotionalCodelet> emotionalCodelets;
 
 	private List<RandomBehavioralCodelet> randomBehavioralCodelets;
 
@@ -78,6 +79,8 @@ public class MecaMind extends Mind {
 	private List<MotivationalBehavioralCodelet> motivationalBehavioralCodelets;
 
 	private List<MotorCodelet> motorCodelets;
+        
+        private AdaptationCodelet adaptationCodelet;
 
 	/*
 	 * System 2
@@ -116,7 +119,7 @@ public class MecaMind extends Mind {
 	 */
 	public MecaMind() {
 		setId(UUID.randomUUID().toString());
-		setWorkingMemory(new WorkingMemory(getId()));
+		setWorkingMemory(new WorkingMemory(getId()/*, attentionCodeletSystem1.getId(), episodicRetrievalCodelet.getId()*/));
 	}
 
 	/**
@@ -127,7 +130,7 @@ public class MecaMind extends Mind {
 	 */
 	public MecaMind(String id) {
 		setId(id);
-		setWorkingMemory(new WorkingMemory(getId()));
+		setWorkingMemory(new WorkingMemory(getId()/*, attentionCodeletSystem1.getId(), episodicRetrievalCodelet.getId()*/));
 	}
 
 	/**
@@ -162,16 +165,17 @@ public class MecaMind extends Mind {
 
 		mountMotivationalBehavioralCodelets();
 
+                mountEpisodicCodelets();
+                
 		mountExpectationCodelet();
                 
                 mountSelectionCodelet();
                 
                 mountLearningCodelet();
                 
-                mountEpisodicCodelets();
-                
                 mountModules();
                 
+                mountAdaptationCodelet();
 	}
 
 	private void mountModules() {
@@ -476,14 +480,15 @@ public class MecaMind extends Mind {
 			attentionCodeletSystem1.setOutputFilteredPerceptsMO(attentionMemoryOutput);
 			insertCodelet(attentionCodeletSystem1);
 		}
-                if(!attentionCodeletsSystem2.isEmpty()){
+                if(attentionCodeletsSystem2 != null){
                     for(AttentionCodelet attention : attentionCodeletsSystem2){
                         //String[] className = attention.getClass().getName().split("\\.");
                         
+                        //olhar isso aqui
                         if(attention instanceof  PerceptualBufferAttentionCodelet){
                         //if(className[4].equals("PerceptualBufferAttentionCodelet")){
                             attention.addOutput(createMemoryObject(attention.getId())); //cria um output com o nome do perceptual
-                            attention.addInput(getWorkingMemory().getCurrentPerceptionMemory());
+                            attention.addInput(attentionCodeletSystem1.getOutputFilteredPerceptsMO());
                             setPerceptualBufferAttentionCodelet((PerceptualBufferAttentionCodelet)attention);
                             insertCodelet(attention);
                         }
@@ -506,8 +511,9 @@ public class MecaMind extends Mind {
             
             if(episodicRetrievalCodelet != null){
                 episodicRetrievalCodelet.addInputs(episodicLearningCodelet.getOutputs());
-                episodicRetrievalCodelet.addInput(getWorkingMemory().getCueMemory());
-                episodicRetrievalCodelet.addOutput(getWorkingMemory().getEpisodicRecallMemory());
+                //episodicRetrievalCodelet.addInput(getWorkingMemory().getCueMemory());
+                episodicRetrievalCodelet.addInputs(attentionCodeletSystem1.getOutputs());
+                episodicRetrievalCodelet.addOutput(createMemoryObject(episodicRetrievalCodelet.getId()));
                 insertCodelet(episodicRetrievalCodelet);
             }
         }
@@ -524,10 +530,10 @@ public class MecaMind extends Mind {
         private void mountExpectationCodelet(){
                 if(expectationCodelet != null){
                         expectationCodelet.addInput(getWorkingMemory().getCurrentPerceptionMemory());
-                        expectationCodelet.addInputs(learningCodelet.getOutputs());
+                        expectationCodelet.addInput(createMemoryObject(learningCodelet.getId()));
                         expectationCodelet.addInputs(episodicRetrievalCodelet.getOutputs());
                         expectationCodelet.addOutput(createMemoryObject(selectionCodelet.getId()));
-                        expectationCodelet.addOutput(createMemoryObject(learningCodelet.getId()));
+                        expectationCodelet.addOutput(createMemoryObject(expectationCodelet.getId()));
                         insertCodelet(expectationCodelet);
                 }
         }
@@ -546,8 +552,8 @@ public class MecaMind extends Mind {
                 if(learningCodelet != null){
                     //weights output
                         learningCodelet.addInput(getWorkingMemory().getCurrentPerceptionMemory());
-                        learningCodelet.addInput(expectationCodelet.getOutput(learningCodelet.getId()));
-                        learningCodelet.addOutput(createMemoryObject(expectationCodelet.getId()));
+                        learningCodelet.addInput(createMemoryObject(expectationCodelet.getId()));
+                        learningCodelet.addOutput(createMemoryObject(learningCodelet.getId()));
                         insertCodelet(learningCodelet);
                 }
         }
@@ -558,10 +564,60 @@ public class MecaMind extends Mind {
 
 			if (attentionCodeletSystem1 != null) {
 				getWorkingMemory().setCurrentPerceptionMemory(attentionCodeletSystem1.getOutputFilteredPerceptsMO());
+                                getWorkingMemory().getCueMemory().setType(attentionCodeletSystem1.getId());
 			}
+                        if(episodicRetrievalCodelet != null){
+                                getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
+                        }
 
 		}
 	}
+        
+        private void mountAdaptationCodelet(){
+            if(adaptationCodelet != null && adaptationCodelet.getPerceptualCodeletsIds() != null
+					&& adaptationCodelet.getMotorCodeletIds() != null){
+                
+                if (motorCodelets != null) {
+						for (MotorCodelet motorCodelet : motorCodelets) {
+							if (motorCodelet != null && motorCodelet.getId() != null) {
+                                                            for(int i=0; i < adaptationCodelet.getMotorCodeletIds().size(); i++){
+                                                                if (motorCodelet.getId()
+										.equalsIgnoreCase(adaptationCodelet.getMotorCodeletIds().get(i))) {
+									adaptationCodelet.addOutputs(motorCodelet.getInputs());
+								}
+                                                        }
+							}
+						}
+					}
+					/*
+					 * Inputs
+					 */
+					if (perceptualCodelets != null) {
+						for (PerceptualCodelet perceptualCodelet : perceptualCodelets) {
+							if (perceptualCodelet != null && perceptualCodelet.getId() != null) {
+								ArrayList<String> perceptualCodeletsIds = adaptationCodelet
+										.getPerceptualCodeletsIds();
+								if (perceptualCodeletsIds != null) {
+									for (String perceptualCodeletId : perceptualCodeletsIds) {
+										if (perceptualCodeletId != null
+												&& perceptualCodelet.getId().equalsIgnoreCase(perceptualCodeletId)) {
+											adaptationCodelet.addInputs(perceptualCodelet.getOutputs());
+										}
+									}
+								}
+							}
+						}
+					}
+
+					if (plannerCodelet != null && plannerCodelet.getId() != null) {
+						if (plannerCodelet.getId().equalsIgnoreCase(adaptationCodelet.getPlannerCodeletId())) {
+							adaptationCodelet.addBroadcasts(plannerCodelet.getOutputs());
+						}
+
+					}
+                insertCodelet(adaptationCodelet);
+            }
+        }
 
 	/**
 	 * Sets the Sensory Codelets.
@@ -584,16 +640,6 @@ public class MecaMind extends Mind {
 	}
 
 	/**
-	 * Sets the Mood Codelets.
-	 * 
-	 * @param moodCodelets
-	 *            the moodCodelets to set
-	 */
-	public void setMoodCodelets(List<MoodCodelet> moodCodelets) {
-		this.moodCodelets = moodCodelets;
-	}
-
-	/**
 	 * Sets the Motivational Codelets.
 	 * 
 	 * @param motivationalCodelets
@@ -611,16 +657,6 @@ public class MecaMind extends Mind {
 	 */
 	public void setAttentionCodeletSystem1(S1To2AttentionCodelet attentionCodeletSystem1) {
 		this.attentionCodeletSystem1 = attentionCodeletSystem1;
-	}
-
-	/**
-	 * Sets the Emotional Codelets.
-	 * 
-	 * @param emotionalCodelets
-	 *            the emotionalCodelets to set
-	 */
-	public void setEmotionalCodelets(List<EmotionalCodelet> emotionalCodelets) {
-		this.emotionalCodelets = emotionalCodelets;
 	}
 
 	/**
@@ -784,30 +820,12 @@ public class MecaMind extends Mind {
 	}
 
 	/**
-	 * Gets the Mood Codelets.
-	 * 
-	 * @return the mood codelets.
-	 */
-	public List<MoodCodelet> getMoodCodelets() {
-		return moodCodelets;
-	}
-
-	/**
 	 * Gets the Motivational Codelets.
 	 * 
 	 * @return the Motivational Codelets.
 	 */
 	public List<MotivationalCodelet> getMotivationalCodelets() {
 		return motivationalCodelets;
-	}
-
-	/**
-	 * Gets the Emotional Codelets.
-	 * 
-	 * @return the Emotional Codelets.
-	 */
-	public List<EmotionalCodelet> getEmotionalCodelets() {
-		return emotionalCodelets;
 	}
 
 	/**
@@ -978,5 +996,28 @@ public class MecaMind extends Mind {
         
         public void setEpisodicAttentionCodelet(EpisodicAttentionCodelet attention){
             this.episodicAttentionCodelet = attention;
+        }
+        
+        
+        public AdaptationCodelet getAdaptationCodelet(){
+            return this.adaptationCodelet;
+        }
+        
+        public void setAdaptationCodelet(AdaptationCodelet adaptation){
+            this.adaptationCodelet = adaptation;
+        }
+        
+        public void removeCodelet(Codelet codelet){
+            this.codeRack.destroyCodelet(codelet);
+        }
+        
+        public void removeBehavioralCodelet(ReactiveBehavioralCodelet codelet){
+            //for(ReactiveBehavioralCodelet bCodelet : this.reactiveBehavioralCodelets){
+                //if(codelet.getId().equals(bCodelet.getId())){
+                    //reactiveBehavioralCodelets.remove(0);
+                //}
+            //}
+            this.reactiveBehavioralCodelets.remove(codelet);
+            this.codeRack.destroyCodelet(codelet);
         }
 }
