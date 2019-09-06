@@ -9,7 +9,7 @@ import br.unicamp.cst.motivational.Appraisal;
 import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.meca.util.Encoder;
 import org.nd4j.linalg.api.ndarray.INDArray;
-
+import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 
