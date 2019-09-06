@@ -90,8 +90,8 @@ public class Episode {
   public int hashCode() { return initialState.hashCode() ^ terminalState.hashCode(); }
 
 
-    public boolean equals(INDArray cueObject, Episode episode, double similarity) {
-        INDArray temp = cueObject.sub(episode.getInitialState());
+    public boolean equals(INDArray cueObject, double similarity) {
+        INDArray temp = cueObject.sub(this.getInitialState());
         //for(int i = 0; i < temp.rank(); i++){}
 
         Double diff = (Double) temp.norm1Number();
