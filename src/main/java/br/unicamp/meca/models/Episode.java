@@ -24,17 +24,20 @@ public class Episode {
   private Appraisal appraisal;
   private String actionTaken;
   private List<String> currentActions = new ArrayList<>();
+  private String id;
 
   public Episode(){}
   
   public Episode(INDArray initialState, INDArray terminalState) {
     this.initialState = initialState;
     this.terminalState = terminalState;
+    this.id = UUID.randomUUID().toString();
   }
 
   public Episode(AbstractObject initialStateOWRL, AbstractObject terminalStateOWRL, Encoder encoder) {
       this.initialState = encoder.encodeConfiguration(initialStateOWRL);
       this.terminalState = encoder.encodeConfiguration(terminalStateOWRL);
+      this.id = UUID.randomUUID().toString();
   }
 
  
@@ -86,7 +89,25 @@ public class Episode {
   @Override
   public int hashCode() { return initialState.hashCode() ^ terminalState.hashCode(); }
 
-  
+
+    public boolean equals(INDArray cueObject, Episode episode, similarity) {
+        INDArray temp = cueObject.sub(episode.getInitialState());
+        //for(int i = 0; i < temp.rank(); i++){}
+
+        Double diff = (Double) temp.norm1Number();
+
+        //if diference less than (1-x)%, that is, x% similarity, return true
+        return diff / temp.length() < (1.0 - similarity);
+    }
+
+  public void setId(String id){
+      this.id = id;
+  }
+
+  public String getId(){
+      return this.id;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Episode)) return false;
