@@ -184,6 +184,8 @@ public class MecaMind extends Mind {
         mountModules();
                 
         mountAdaptationCodelet();
+
+		mountConsciousnessCodelet();
 	}
 
 	private void mountActionSequencePlanMemory() {
@@ -684,6 +686,13 @@ public class MecaMind extends Mind {
 				}
 			}
 			insertCodelet(adaptationCodelet);
+		}
+	}
+
+
+	private void mountConsciousnessCodelet(){
+		if(consciousnessCodelet != null){
+			insertCodelet(consciousnessCodelet);
 		}
 	}
 
