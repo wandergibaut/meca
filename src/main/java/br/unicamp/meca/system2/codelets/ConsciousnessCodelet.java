@@ -107,8 +107,6 @@ import java.util.List;
 public abstract class ConsciousnessCodelet extends Codelet {
 
 	private CodeRack codeRack;
-	private List<String> inputCodeletsIds;
-	private List<String> outputCodeletsIds;
 
 	/**
 	 * Creates a MECA Consciousness Codelet.
@@ -117,10 +115,8 @@ public abstract class ConsciousnessCodelet extends Codelet {
 	 *            the Code Rack, containing all the codelets in the whole
 	 *            system.
 	 */
-	public ConsciousnessCodelet(CodeRack codeRack, List<String> inputCodeletsIds, List<String> outputCodeletsIds) {
+	public ConsciousnessCodelet(CodeRack codeRack) {
 		this.codeRack = codeRack;
-		this.inputCodeletsIds = inputCodeletsIds;
-		this.outputCodeletsIds = outputCodeletsIds;
 	}
 
 	@Override
