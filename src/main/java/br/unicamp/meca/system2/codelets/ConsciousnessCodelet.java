@@ -14,6 +14,10 @@ package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.consciousness.SpotlightBroadcastController;
 import br.unicamp.cst.core.entities.CodeRack;
+import br.unicamp.cst.core.entities.Codelet;
+import br.unicamp.cst.core.entities.Memory;
+
+import java.util.List;
 
 /**
  * This class represents MECA's Consciousness Codelet.
@@ -100,7 +104,11 @@ import br.unicamp.cst.core.entities.CodeRack;
  * @see SpotlightBroadcastController
  *
  */
-public abstract class ConsciousnessCodelet extends SpotlightBroadcastController {
+public abstract class ConsciousnessCodelet extends Codelet {
+
+	private CodeRack codeRack;
+	private List<String> inputCodeletsIds;
+	private List<String> outputCodeletsIds;
 
 	/**
 	 * Creates a MECA Consciousness Codelet.
@@ -109,7 +117,24 @@ public abstract class ConsciousnessCodelet extends SpotlightBroadcastController 
 	 *            the Code Rack, containing all the codelets in the whole
 	 *            system.
 	 */
-	public ConsciousnessCodelet(CodeRack codeRack) {
-		super(codeRack);
+	public ConsciousnessCodelet(CodeRack codeRack, List<String> inputCodeletsIds, List<String> outputCodeletsIds) {
+		this.codeRack = codeRack;
+		this.inputCodeletsIds = inputCodeletsIds;
+		this.outputCodeletsIds = outputCodeletsIds;
 	}
+
+	@Override
+	public void proc(){
+		for(Codelet codelet : this.codeRack.getAllCodelets()){
+			if(codelet.getBroadcast() != null){
+				if(!codelet.getBroadcast().isEmpty()){
+					processBroadcast(codelet.getBroadcast());
+				}
+			}
+		}
+
+	}
+
+	public abstract void processBroadcast(List<Memory> broadcastMemories);
+
 }
