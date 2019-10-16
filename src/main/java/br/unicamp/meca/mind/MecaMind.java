@@ -617,6 +617,7 @@ public class MecaMind extends Mind {
 		if(selectionCodelet != null){
 			selectionCodelet.addInputs(expectationCodelet.getOutputs());
 			selectionCodelet.addOutput(getWorkingMemory().getNextActionMemory());
+			selectionCodelet.addOutput(getWorkingMemory().getPredictedSituationMemory());
 			insertCodelet(selectionCodelet);
 		}
 	}
