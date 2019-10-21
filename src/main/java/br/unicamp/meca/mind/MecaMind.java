@@ -632,7 +632,7 @@ public class MecaMind extends Mind {
 		}
 	}
         
-        
+    //TODO: nextMemory and predictedSituation
 	private void mountWorkingMemory() {
 		if (getWorkingMemory() != null) {
 
@@ -640,9 +640,11 @@ public class MecaMind extends Mind {
 				getWorkingMemory().setCurrentPerceptionMemory(attentionCodeletSystem1.getOutputFilteredPerceptsMO());
                                 getWorkingMemory().getCueMemory().setType(attentionCodeletSystem1.getId());
 			}
-                        if(episodicRetrievalCodelet != null){
-                                getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
-                        }
+			if(episodicRetrievalCodelet != null){
+			    getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
+			}
+			getWorkingMemory().getNextActionMemory().setType("nextAction");
+			getWorkingMemory().getPredictedSituationMemory().setType("predictedSituation");
 
 		}
 	}

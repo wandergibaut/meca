@@ -117,9 +117,9 @@ public class WorkingMemory {
 	private Memory imaginationsMemory;
 	private Memory goalsMemory;
 	private Memory currentPerceptionMemory;
-	private Memory predictedSituationMemory;
+	private MemoryObject predictedSituationMemory;
 
-	private Memory nextActionMemory;
+	private MemoryObject nextActionMemory;
 
 	/**
 	 * Creates the MECA's Working Memory.
@@ -322,7 +322,7 @@ public class WorkingMemory {
 	 * 
 	 * @return the predicte situation memory.
 	 */
-	public Memory getPredictedSituationMemory() {
+	public MemoryObject getPredictedSituationMemory() {
 		return predictedSituationMemory;
 	}
 
@@ -332,7 +332,7 @@ public class WorkingMemory {
 	 * @param predictedSituationMemory
 	 *            the predicted situation memory to set.
 	 */
-	public void setPredictedSituationMemory(Memory predictedSituationMemory) {
+	public void setPredictedSituationMemory(MemoryObject predictedSituationMemory) {
 		this.predictedSituationMemory = predictedSituationMemory;
 	}
 
@@ -341,7 +341,7 @@ public class WorkingMemory {
 	 * 
 	 * @return the next action memory.
 	 */
-	public Memory getNextActionMemory() {
+	public MemoryObject getNextActionMemory() {
 		return nextActionMemory;
 	}
 
@@ -351,7 +351,7 @@ public class WorkingMemory {
 	 * @param nextActionMemory
 	 *            the next action memory to set.
 	 */
-	public void setNextActionMemory(Memory nextActionMemory) {
+	public void setNextActionMemory(MemoryObject nextActionMemory) {
 		this.nextActionMemory = nextActionMemory;
 	}
 }
