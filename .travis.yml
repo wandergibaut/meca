@@ -1,19 +1,23 @@
 env:
   global:
-  - CC_TEST_REPORTER_ID=cd9dce60ab1686b279c6b871d4f5171e3dc3d17426617eb12db6cfee74da898c
+    - CC_TEST_REPORTER_ID=cd9dce60ab1686b279c6b871d4f5171e3dc3d17426617eb12db6cfee74da898c
 language: java
 dist: bionic
+services:
+  - xvfb
 jdk:
 - openjdk8
 - openjdk9
 before_script:
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-  > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
-- ./cc-test-reporter before-build
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
-- ./gradlew clean build jacocoTestReport
+  - ./gradlew clean build jacocoTestReport
 after_script:
-- JACOCO_SOURCE_PATH=src ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml
+  - JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml
   --input-type jacoco
-- ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+  - ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+  - bash ./telegram_notification.sh
+notifications:
+
