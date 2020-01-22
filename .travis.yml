@@ -1,6 +1,6 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=cd9dce60ab1686b279c6b871d4f5171e3dc3d17426617eb12db6cfee74da898c
+    - CC_TEST_REPORTER_ID=a400c9100efae66a7bd9bd11aca0118bb516dca7af9471d08c735361a11082f5
 language: java
 dist: bionic
 services:
@@ -19,5 +19,4 @@ after_script:
   --input-type jacoco
   - ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
   - bash ./telegram_notification.sh
-notifications:
 

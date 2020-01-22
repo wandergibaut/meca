@@ -15,7 +15,7 @@ package br.unicamp.meca.system2.codelets;
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.meca.models.Episode;
-import org.nd4j.linalg.api.ndarray.INDArray;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public abstract class SelectionCodelet extends Codelet{
     protected Memory predictedSituationMemory;
     protected Memory nextActionMemory;
     
-    protected INDArray predictedSituation;
+    protected List<float[]> predictedSituation;
     protected String nextAction;
     
     /** We need a reference to the SelectionCodelet which will read the outputs of this ExpectationCodelet*/
@@ -60,7 +60,7 @@ public abstract class SelectionCodelet extends Codelet{
 
     @Override
     public void proc() {
-        HashMap<String, INDArray> selection = policy();
+        HashMap<String, List<float[]>> selection = policy();
         
         nextAction = selection.keySet().iterator().next();
         
@@ -76,7 +76,7 @@ public abstract class SelectionCodelet extends Codelet{
     }
     
     
-    public abstract HashMap<String, INDArray> policy();
+    public abstract HashMap<String, List<float[]>> policy();
     
     public String getHighestAppraisalAction(Map<String, Episode> list){
         Episode better = new Episode();
@@ -122,7 +122,7 @@ public abstract class SelectionCodelet extends Codelet{
         //return action;
     }
     
-    public INDArray getHighestAppraisalConfiguration(Map<String, Episode> list, String choosen){
+    public List<float[]> getHighestAppraisalConfiguration(Map<String, Episode> list, String choosen){
         Episode better = new Episode();
         better = list.get(choosen);
         /*for(Episode pair : list.values()){

@@ -20,7 +20,6 @@ import br.unicamp.cst.representation.owrl.Property;
 import br.unicamp.cst.representation.owrl.QualityDimension;
 import br.unicamp.meca.system1.codelets.S1To2AttentionCodelet;
 import br.unicamp.meca.models.Episode;
-import org.nd4j.linalg.api.ndarray.INDArray;
 
 import java.util.List;
 
@@ -35,9 +34,9 @@ public class AppraisalCodelet extends Codelet{
     private Memory currentPerceptionMemory;
     private Appraisal appraisal;
     
-    private INDArray predicted;
-    private INDArray lastActual;
-    private INDArray actual;
+    private List<float[]> predicted;
+    private List<float[]> lastActual;
+    private List<float[]> actual;
     private Episode evaluation;
     private S1To2AttentionCodelet attention;
     
@@ -58,8 +57,8 @@ public class AppraisalCodelet extends Codelet{
     
     @Override
     public void proc() {
-        predicted = (INDArray)predictedSituationMO.getI();
-        actual = (INDArray)currentPerceptionMemory.getI();
+        predicted = (List<float[]>)predictedSituationMO.getI();
+        actual = (List<float[]>)currentPerceptionMemory.getI();
         
         //if((double)getPropertyStruct(getAbstractObjectStruct(actual,"self"),"TotalTime").getQualityDimensions().get(0).getValue() > (double)getPropertyStruct(getAbstractObjectStruct(lastActual,"self"),"TotalTime").getQualityDimensions().get(0).getValue()){
             appraisal = appraisalGeneration(predicted, actual);
@@ -73,7 +72,7 @@ public class AppraisalCodelet extends Codelet{
         outputAppraisalMemory.setI(evaluation);
     }
     
-    public Appraisal appraisalGeneration(INDArray predicted, INDArray actual){
+    public Appraisal appraisalGeneration(List<float[]> predicted, List<float[]> actual){
         
         if(equals(actual,predicted)){
             Appraisal app = new Appraisal("similarity","high",80);
@@ -122,7 +121,7 @@ public class AppraisalCodelet extends Codelet{
 
 
     //TODO: hamming distance
-    public boolean equals(INDArray currentPerception, INDArray predictedSituation){
+    public boolean equals(List<float[]> currentPerception, List<float[]> predictedSituation){
 
         return false;
     }

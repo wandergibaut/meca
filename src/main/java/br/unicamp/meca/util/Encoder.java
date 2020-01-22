@@ -6,7 +6,8 @@
 package br.unicamp.meca.util;
 
 import br.unicamp.cst.representation.owrl.AbstractObject;
-import org.nd4j.linalg.api.ndarray.INDArray;
+
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 public abstract class Encoder {
     
     
-    public abstract INDArray encodeConfiguration(AbstractObject conf);
+    public abstract List<float[]> encodeConfiguration(AbstractObject conf);
     
     public abstract double[][] encodeConfigurationDouble(AbstractObject conf);
     

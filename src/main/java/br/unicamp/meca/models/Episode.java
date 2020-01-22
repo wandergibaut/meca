@@ -8,7 +8,6 @@ package br.unicamp.meca.models;
 import br.unicamp.cst.motivational.Appraisal;
 import br.unicamp.cst.representation.owrl.AbstractObject;
 import br.unicamp.meca.util.Encoder;
-import org.nd4j.linalg.api.ndarray.INDArray;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,8 @@ import java.util.List;
  */
 public class Episode {
 //arrumar os nomes pra left right de novo
-  private INDArray initialState;
-  private INDArray terminalState;
+  private List<float[]> initialState;
+  private List<float[]> terminalState;
   private Appraisal appraisal;
   private String actionTaken;
   private List<String> currentActions = new ArrayList<>();
@@ -28,7 +27,7 @@ public class Episode {
 
   public Episode(){}
   
-  public Episode(INDArray initialState, INDArray terminalState) {
+  public Episode(List<float[]> initialState, List<float[]> terminalState) {
     this.initialState = initialState;
     this.terminalState = terminalState;
     this.id = UUID.randomUUID().toString();
@@ -41,20 +40,20 @@ public class Episode {
   }
 
  
-  public INDArray getInitialState() {
+  public List<float[]> getInitialState() {
       return initialState;
   }
-  
-  public void setInitialState(INDArray initialState) {
+
+  public void setInitialState(List<float[]> initialState) {
       this.initialState = initialState;
   }
-  
+
  
-  public INDArray getTerminalState() {
+  public List<float[]> getTerminalState() {
       return this.terminalState;
   }
   
-  public void setTerminalState(INDArray terminalState) {
+  public void setTerminalState(List<float[]> terminalState) {
       this.terminalState = terminalState;
   }
 
@@ -90,14 +89,19 @@ public class Episode {
   public int hashCode() { return initialState.hashCode() ^ terminalState.hashCode(); }
 
 
-    public boolean equals(INDArray cueObject, double similarity) {
-        INDArray temp = cueObject.sub(this.getInitialState());
-        //for(int i = 0; i < temp.rank(); i++){}
-
-        Double diff = (Double) temp.norm1Number();
-
+    public boolean equals(List<float[]> cueObject, double similarity) {
+      double diff = 0;
+      int numberOfElements = 0;
+      //add the difference between each element of cue and initialState
+      for(int j =0; j< cueObject.size(); j++){
+          float[] row = cueObject.get(j);
+          for(int i =0; i< row.length; i++){
+              diff +=Math.abs(row[i] - this.getInitialState().get(j)[i]);
+              numberOfElements++;
+          }
+      }
         //if diference less than (1-x)%, that is, x% similarity, return true
-        return diff / temp.length() < (1.0 - similarity);
+        return (diff / ((double) numberOfElements)) < (1.0 - similarity);
     }
 
   public void setId(String id){

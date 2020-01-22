@@ -14,7 +14,7 @@ package br.unicamp.meca.system2.codelets;
 
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.meca.models.Episode;
-import org.nd4j.linalg.api.ndarray.INDArray;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     protected Memory perceptualBufferMemory;
     protected Memory episodicBufferMemory;
     
-    protected List<INDArray> perceptionBufferList = new ArrayList<>();
+    protected List<List<float[]>> perceptionBufferList = new ArrayList<>();
     protected List<Episode> episodicBufferList = new ArrayList<>();
     private final int maxSize;
 
@@ -64,7 +64,7 @@ public abstract class EpisodicAttentionCodelet extends AttentionCodelet{
     @Override
     public void proc() {
         if(episodicBufferMemory != null){
-            perceptionBufferList = (List<INDArray>) episodicBufferMemory.getI();
+            perceptionBufferList = (List<List<float[]>>) episodicBufferMemory.getI();
             //pega as listas
             perceptionBundleMethod();
                     //da set nas memories
