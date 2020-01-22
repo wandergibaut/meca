@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/wandgibaut/meca.svg?branch=master)](https://travis-ci.org/wandgibaut/meca) [![Maintainability](https://api.codeclimate.com/v1/badges/f0fbef3831afc96eb1c8/maintainability)](https://codeclimate.com/github/wandgibaut/meca/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/f0fbef3831afc96eb1c8/test_coverage)](https://codeclimate.com/github/wandgibaut/meca/test_coverage)
-[![](https://jitpack.io/v/CST-Group/meca.svg?label=Release)](https://jitpack.io/#CST-Group/meca)
+[![](https://jitpack.io/v/wandgibaut/meca.svg)](https://jitpack.io/#wandgibaut/meca)
 
 # MECA
 This Repository contains the source code of the **Multipurpose Enhanced Cognitive Architecture (MECA)**.
