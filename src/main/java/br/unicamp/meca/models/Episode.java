@@ -104,6 +104,18 @@ public class Episode {
         return (diff / ((double) numberOfElements)) < (1.0 - similarity);
     }
 
+    public double diff(List<float[]> cueObject){
+        double diff = 0;
+        //add the difference between each element of cue and initialState
+        for(int j =0; j< cueObject.size(); j++){
+            float[] row = cueObject.get(j);
+            for(int i =0; i< row.length; i++){
+                diff +=Math.abs(row[i] - this.getInitialState().get(j)[i]);
+            }
+        }
+        return diff;
+    }
+
   public void setId(String id){
       this.id = id;
   }
