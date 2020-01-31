@@ -649,7 +649,6 @@ public class MecaMind extends Mind {
 			if(episodicRetrievalCodelet != null){
 			    getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
 			}
-			getWorkingMemory().getNextActionMemory().setType("nextAction");
 			getWorkingMemory().getPredictedSituationMemory().setType("predictedSituation");
 
 		}
@@ -1031,11 +1030,20 @@ public class MecaMind extends Mind {
 
 	/**
 	 * Gets the Expectation Codelet.
-	 * 
+	 *
 	 * @return the expectationCodelet.
 	 */
 	public ExpectationCodelet getExpectationCodelet() {
 		return expectationCodelet;
+	}
+
+	/**
+	 * Gets the Selection Codelet.
+	 *
+	 * @return the selectionCodelet.
+	 */
+	public SelectionCodelet getSelectionCodelet() {
+		return selectionCodelet;
 	}
 
 	/**
