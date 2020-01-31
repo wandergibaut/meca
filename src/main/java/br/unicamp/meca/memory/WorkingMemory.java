@@ -137,7 +137,9 @@ public class WorkingMemory {
 		setGoalsMemory(new MemoryContainer());
 
 		setCueMemory(new MemoryObject());
-		setNextActionMemory(new MemoryObject());
+		MemoryObject nextAction = new MemoryObject();
+		nextAction.setType("nextAction");
+		setNextActionMemory(nextAction);
 		setExecutivePlanMemory(new MemoryObject());
 		setCurrentPerceptionMemory(new MemoryObject());
 		setPredictedSituationMemory(new MemoryObject());

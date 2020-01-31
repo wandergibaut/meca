@@ -649,7 +649,6 @@ public class MecaMind extends Mind {
 			if(episodicRetrievalCodelet != null){
 			    getWorkingMemory().getEpisodicRecallMemory().setType(episodicRetrievalCodelet.getId());
 			}
-			getWorkingMemory().getNextActionMemory().setType("nextAction");
 			getWorkingMemory().getPredictedSituationMemory().setType("predictedSituation");
 
 		}
