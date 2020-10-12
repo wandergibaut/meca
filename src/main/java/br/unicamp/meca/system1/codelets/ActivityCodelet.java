@@ -184,13 +184,9 @@ public abstract class ActivityCodelet extends Codelet {
 	public abstract void proc(ArrayList<Memory> perceptualMemories, Memory broadcastMemory, Memory motorMemory);
 
 	/**
-<<<<<<< HEAD:src/main/java/br/unicamp/meca/system1/codelets/ActionFromPerceptionCodelet.java
+
 	 * Returns the id of the Planner Codelet whose outputs will be read by this
-	 * Action From Perception Codelet.
-=======
-	 * Returns the id of the Soar Codelet whose outputs will be read by this
 	 * Activity Codelet.
->>>>>>> b0e92567f9d158d952d4ce19f535e2909177d01c:src/main/java/br/unicamp/meca/system1/codelets/ActivityCodelet.java
 	 * 
 	 * @return the plannerCodeletId
 	 */
@@ -199,13 +195,8 @@ public abstract class ActivityCodelet extends Codelet {
 	}
 
 	/**
-<<<<<<< HEAD:src/main/java/br/unicamp/meca/system1/codelets/ActionFromPerceptionCodelet.java
-	 * Sets the id of the Planner Codelet whose outputs will be read by this
-	 * Action From Perception Codelet.
-=======
 	 * Sets the id of the Soar Codelet whose outputs will be read by this
 	 * Activity Codelet.
->>>>>>> b0e92567f9d158d952d4ce19f535e2909177d01c:src/main/java/br/unicamp/meca/system1/codelets/ActivityCodelet.java
 	 * 
 	 * @param plannerCodeletId
 	 *            the plannerCodeletId to set
