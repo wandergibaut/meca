@@ -32,7 +32,7 @@ public class ActionStepTest extends ActionStep {
         return(false);
     }
     
-    @Test
+    /*@Test
     public void testActionStep() {
         ActionStep as1 = new ActionStepTest();
         assertEquals(as1.getNumberOfParameters(),0);
@@ -46,7 +46,7 @@ public class ActionStepTest extends ActionStep {
         assertEquals(as2.getParameter("param"),"value2");
         as2.unsetParameter("param");
         assertEquals(as2.getNumberOfParameters(),0);
-    }
+    }*/
 
 
     
