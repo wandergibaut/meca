@@ -28,9 +28,9 @@ public class Test1AndTest2BehaviorCodelet extends BehaviorCodelet {
 	protected ActionSequencePlan buildActionSequencePlan(ArrayList<Memory> perceptualMemories) {
 		
 		if(actionSequencePlan == null) {
-			ActionStep as1 = new ActionStepTest("Test2Activity");
-	        ActionStep as2 = new ActionStepTest("Test3Activity");
-	        actionSequencePlan = new ActionSequencePlan(new ActionStep[] {as1,as2});
+			//ActionStep as1 = new ActionStepTest("Test2Activity");
+	        //ActionStep as2 = new ActionStepTest("Test3Activity");
+	        //actionSequencePlan = new ActionSequencePlan(new ActionStep[] {as1,as2});
 		}
 		    
 		return actionSequencePlan;

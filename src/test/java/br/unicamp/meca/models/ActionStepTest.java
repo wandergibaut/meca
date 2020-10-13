@@ -19,9 +19,9 @@ public class ActionStepTest extends ActionStep {
         
     }
     
-    public ActionStepTest(String s) {
+    /*public ActionStepTest(String s) {
         super(s);
-    }
+    }*/
     
      public void setUp() {
         System.out.println("########## ActionStep TESTS ##########");
@@ -31,10 +31,10 @@ public class ActionStepTest extends ActionStep {
     public boolean stopCondition(List<Memory> perceptions) {
         return(false);
     }
-    
-    /*@Test
+
+    @Test
     public void testActionStep() {
-        ActionStep as1 = new ActionStepTest();
+        /*ActionStep as1 = new ActionStepTest();
         assertEquals(as1.getNumberOfParameters(),0);
         ActionStep as2 = new ActionStepTest("TestAction");
         assertEquals(as2.getNumberOfParameters(),0);
@@ -45,8 +45,9 @@ public class ActionStepTest extends ActionStep {
         as2.setParameter("param", "value2");
         assertEquals(as2.getParameter("param"),"value2");
         as2.unsetParameter("param");
-        assertEquals(as2.getNumberOfParameters(),0);
-    }*/
+        assertEquals(as2.getNumberOfParameters(),0);*/
+
+    }
 
 
     

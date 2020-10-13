@@ -20,7 +20,7 @@ public class ActionSequencePlanTest {
     @Test
     public void testGetCurrentActionId() {
     	
-    	ActionStep as1 = new ActionStepTest("Land");
+    	/*ActionStep as1 = new ActionStepTest("Land");
         ActionStep as2 = new ActionStepTest("Stop");
         ActionSequencePlan landAndStopSequencePlan = new ActionSequencePlan(new ActionStep[] {as1,as2});
     	
@@ -28,6 +28,6 @@ public class ActionSequencePlanTest {
     	
     	landAndStopSequencePlan.setCurrentActionIdIndex(1);
     	
-    	assertEquals(landAndStopSequencePlan.getCurrentActionStep().getActionId(), "Stop");
+    	assertEquals(landAndStopSequencePlan.getCurrentActionStep().getActionId(), "Stop");*/
     }
 }
