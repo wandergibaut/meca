@@ -291,13 +291,15 @@ public class MecaMind extends Mind {
 	
 	private void mountActivityTrackingCodelet() {
             
-            ArrayList<String> perceptualIds = new ArrayList<>();
-            for (PerceptualCodelet perception : perceptualCodelets)
-                perceptualIds.add(perception.getId());
-            activityTrackingCodelet = new ActivityTrackingCodelet("ActivityTracking", perceptualIds);
-            registerCodelet(activityTrackingCodelet, "ActivityTracking");
-            registerMemory(ACTION_SEQUENCE_PLAN_ID,"Plans");
-            registerMemory(ACTION_SEQUENCE_PLAN_REQUEST_ID,"Plans");
+            if (perceptualCodelets != null) {
+                ArrayList<String> perceptualIds = new ArrayList<>();
+                for (PerceptualCodelet perception : perceptualCodelets)
+                    perceptualIds.add(perception.getId());
+                activityTrackingCodelet = new ActivityTrackingCodelet("ActivityTracking", perceptualIds);
+                registerCodelet(activityTrackingCodelet, "ActivityTracking");
+                registerMemory(ACTION_SEQUENCE_PLAN_ID,"Plans");
+                registerMemory(ACTION_SEQUENCE_PLAN_REQUEST_ID,"Plans");
+            }
 
             if (activityTrackingCodelet != null && activityTrackingCodelet.getId() != null
 				&& activityTrackingCodelet.getPerceptualCodeletsIds() != null) {	

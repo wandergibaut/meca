@@ -10,12 +10,9 @@ description = "The Multipurpose Enhanced Cognitive Architecture (MECA)"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version = '0.3.0'
+version = '0.4.1'
 
 repositories {
-    flatDir {
-        dirs '../cst/build/libs'
-    }
     mavenCentral()
     maven { url 'https://jitpack.io' }
     maven { 
@@ -30,8 +27,7 @@ repositories {
 }
 
 dependencies {
-   api 'com.github.CST-Group:cst:f59398d50b15bf24af6779ad44b6d4f7b6442191'
-   //api 'com.github.CST-Group:cst:0.5.1'
+   api 'com.github.CST-Group:cst:0.6.0'
    testImplementation group: 'junit', name: 'junit', version: '4.12'
    testImplementation 'org.ros.rosjava_messages:std_msgs:0.5.11'
    testImplementation 'org.ros.rosjava_messages:rosjava_test_msgs:0.3.0'
@@ -57,7 +53,6 @@ task uberJar(type: Jar) {
     archiveClassifier = 'full'
     manifest {
       attributes(
-//        'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
         'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')    
       )
       
