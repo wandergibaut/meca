@@ -44,7 +44,7 @@ public class RosServiceClientTest {
     @Test
     public void testRosService() throws URISyntaxException, InterruptedException {
     	
-		AddTwoIntService addTwoIntService = new AddTwoIntService();
+		/*AddTwoIntService addTwoIntService = new AddTwoIntService();
 		NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 		NodeConfiguration nodeConfiguration = NodeConfiguration.newPublic("127.0.0.1",new URI("http://127.0.0.1:11311"));
 		nodeMainExecutor.execute(addTwoIntService, nodeConfiguration);	
@@ -79,14 +79,14 @@ public class RosServiceClientTest {
 		
 		nodeMainExecutor.shutdownNodeMain(addTwoIntService);
 		
-		mecaMind.shutDown();
+		mecaMind.shutDown();*/
     
     }
     
     @Test
     public void testRosServiceCallTwice() throws URISyntaxException, InterruptedException {
     	
-		AddTwoIntService addTwoIntService = new AddTwoIntService();
+		/*AddTwoIntService addTwoIntService = new AddTwoIntService();
 		NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 		NodeConfiguration nodeConfiguration = NodeConfiguration.newPublic("127.0.0.1",new URI("http://127.0.0.1:11311"));
 		nodeMainExecutor.execute(addTwoIntService, nodeConfiguration);	
@@ -130,7 +130,7 @@ public class RosServiceClientTest {
 		
 		nodeMainExecutor.shutdownNodeMain(addTwoIntService);
 		
-		mecaMind.shutDown();
+		mecaMind.shutDown();*/
     
     }
 }

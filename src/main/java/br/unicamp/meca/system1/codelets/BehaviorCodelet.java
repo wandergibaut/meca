@@ -70,33 +70,17 @@ public abstract class BehaviorCodelet extends Codelet {
 	 * @param plannerCodeletId
 	 *            the id of the Soar Codelet whose outputs will be read by this
 	 *            Behavior Codelet.
-	 * @param actionSequencePlan
-	 * 				the ActionSequencePlan that this Behavior Codelet will provide
 	 * @see Codelet
-	 * @see ActionSequencePlan
 	 */
 	public BehaviorCodelet(String id, ArrayList<String> perceptualCodeletsIds, ArrayList<String> motivationalCodeletsIds,
-			String plannerCodeletId, ActionSequencePlan actionSequencePlan) {
-		super();
+						   String plannerCodeletId) {
 		setName(id);
 		this.id = id;
 		this.perceptualCodeletsIds = perceptualCodeletsIds;
 		this.motivationalCodeletsIds = motivationalCodeletsIds;
 		this.plannerCodeletId = plannerCodeletId;
-		this.actionSequencePlan = actionSequencePlan;
 	}
-	
-	/**
-	 * Track and advance actions in the sequence plan. To be implemented in each object of this class,
-	 * according to its action sequence plan.
-	 * 
-	 * @param actionSequencePlan
-	 * 				the ActionSequencePlan that this Behavior Codelet provides.
-	 * @param perceptualMemories
-	 *            the list Perceptual Memories coming from Perceptual Codelets.
-	 */
-	public abstract void trackActionSequencePlan(ArrayList<Memory> perceptualMemories, ActionSequencePlan actionSequencePlan);
-	
+		
 	@Override
 	public void accessMemoryObjects() {
 		
@@ -123,7 +107,7 @@ public abstract class BehaviorCodelet extends Codelet {
 
 				for(String motivationalCodeletsId : motivationalCodeletsIds)
 				{
-					Memory inputDrive = this.getInput(motivationalCodeletsId + "_DRIVE_MO");
+					Memory inputDrive = this.getInput(motivationalCodeletsId + "Drive");
 					driveMemories.add(inputDrive);
 				}
 			}
@@ -172,10 +156,21 @@ public abstract class BehaviorCodelet extends Codelet {
 
 	}
 	
+	/**
+	 * Builds the action sequence plan to be outputed by this BehaviorCodelet
+	 * 
+	 * @param perceptualMemories the Perceptual Memories coming from Perceptual Codelets.
+	 * @return the action sequence plan to be followed.
+	 */
+	protected abstract ActionSequencePlan buildActionSequencePlan(ArrayList<Memory> perceptualMemories);
+	
 	@Override
 	public void proc() {
 		
-		trackActionSequencePlan(perceptualMemories,actionSequencePlan);
+		actionSequencePlan = buildActionSequencePlan(perceptualMemories);
+		
+		if(broadcastMemory != null && broadcastMemory.getI()!= null && broadcastMemory.getI() instanceof ActionSequencePlan)
+			actionSequencePlan = (ActionSequencePlan) broadcastMemory.getI();
 		
 		if(actionSequencePlan != null) {
 			((MemoryContainer) actionSequencePlanMemoryContainer).setI(actionSequencePlan,getActivation(),id);
@@ -185,6 +180,7 @@ public abstract class BehaviorCodelet extends Codelet {
 			((MemoryContainer) actionSequencePlanRequestMemoryContainer).setI(id,getActivation(),id);
 		}
 	}
+
 
 	/**
 	 * Returns the id of the Soar Codelet whose outputs will be read by this
