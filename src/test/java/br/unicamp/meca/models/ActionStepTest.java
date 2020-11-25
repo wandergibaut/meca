@@ -15,9 +15,9 @@ public class ActionStepTest extends ActionStep {
         
     }
     
-    /*public ActionStepTest(String s) {
+    public ActionStepTest(String s) {
         super(s);
-    }*/
+    }
     
      public void setUp() {
         System.out.println("########## ActionStep TESTS ##########");
@@ -25,6 +25,11 @@ public class ActionStepTest extends ActionStep {
      
     @Override 
     public boolean stopCondition(List<Memory> perceptions) {
+        if (perceptions != null && perceptions.size() > 0) {
+            Memory perceptionMemory = perceptions.get(0);
+            if (perceptionMemory != null && perceptionMemory.getEvaluation() > 0.5) return(true);
+            else return(false);
+        }
         return(false);
     }
 
